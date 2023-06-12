@@ -22,6 +22,9 @@ if (isset($_GET['url'])) {
 		case 'data_keuangan':
 			include 'data_keuangan.php';
 			break;
+		case 'saldo_awal':
+			include 'saldo_awal.php';
+			break;
 		case 'index_keuangan':
 			include 'index_keuangan.php';
 			break;

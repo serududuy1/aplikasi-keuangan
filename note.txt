@@ -12,3 +12,10 @@ INPUT KEUANGAN ROMBAK ULANG
 ERD ROMBAK ULANG
 DB ROMBAK ULANG
 
+
+
+contoh get bulan lalu = "SELECT * FROM saldo_akhir
+     where month(waktu)='$bulan'
+//disini bulan nya sudah bulan -1 (bulan kemarin)
+
+SELECT * FROM `cutis` WHERE day(tgl)=9
