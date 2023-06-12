@@ -15,6 +15,10 @@ DB ROMBAK ULANG
 
 
 contoh::
+
+$bulan date('m', strtotime(date('Y-m-d') . '- 1 month'));
+
+
 Get bulan lalu = "SELECT * FROM saldo_akhir
      where month(waktu)='$bulan'
 //disini bulan nya sudah bulan -1 (bulan kemarin)
