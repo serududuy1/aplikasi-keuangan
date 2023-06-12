@@ -14,10 +14,33 @@ DB ROMBAK ULANG
 
 
 
-contoh get bulan lalu = "SELECT * FROM saldo_akhir
+contoh::
+Get bulan lalu = "SELECT * FROM saldo_akhir
      where month(waktu)='$bulan'
 //disini bulan nya sudah bulan -1 (bulan kemarin)
 
 SELECT * FROM `cutis` WHERE day(tgl)=$bulan
 //tgl adalah nama field
 // $bulan adalah variabel dari post bulan 
+
+jika ada saldo akhir bulan lalu akan insert ke saldo awal bulan ini
+jika tidak ada saldo akhir bulan lalu maka insert saldo awal bulan ini = 0
+
+
+menampilkan saldo akhir bulan kemarin yang terakhir::
+SELECT * FROM saldo_akhir ORDER BY id DESC LIMIT 1
+
+insert saldo akhir bulan lalu ke saldo awal bulan ini::
+$saldo_akhir = SELECT * FROM saldo_akhir ORDER BY id DESC LIMIT 1
+
+query=insert into saldo_awal (id, saldo_awal) 
+     VALUES('id',$saldo['jml_saldo_akhir']);
+
+
+
+struktur db::
+
+tabel saldo = id_saldo, id_saldo_awal, id_saldo_akhir, id_trx
+tabel saldo awal = id_saldo_awal,tgl,  jml_saldo_awal
+tabel saldo akhir = id_saldo_akhir, tgl,id_trx, jml_saldo_akhir
+tabel trx = id_trx, jml_trx
