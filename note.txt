@@ -40,7 +40,11 @@ $saldo_akhir = SELECT * FROM saldo_akhir ORDER BY id DESC LIMIT 1
 query=insert into saldo_awal (id, saldo_awal) 
      VALUES('id',$saldo['jml_saldo_akhir']);
 
+menampilkan saldo masuk dan keluar berdasarkan rt::
+SELECT * FROM trx INNER JOIN users on trx.id_user = users.id_user  where users.rt=1 
 
+menampilkan saldo total berdasarkan rt
+SELECT *,sum(jml_trx) FROM trx INNER JOIN users on trx.id_user = users.id_user  where users.rt=1 
 
 struktur db::
 

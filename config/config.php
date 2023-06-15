@@ -1,6 +1,6 @@
 <?php 
 
-$koneksi = mysqli_connect("localhost","root","","db_karang_taruna");
+$koneksi = mysqli_connect("localhost","root","","db_keuangan");
 
 // Check connection
 if (mysqli_connect_errno()){
