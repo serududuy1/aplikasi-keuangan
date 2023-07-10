@@ -98,7 +98,7 @@
                                                   <?php
                     require '../config/config.php';
                     $bulan =  date('m', strtotime(date('Y-m-d')));
-                    $sql = mysqli_query($koneksi,"SELECT * FROM saldo_akhir ORDER BY id_saldo_akhir DESC LIMIT 1");
+                    $sql = mysqli_query($koneksi,"SELECT * FROM saldo_akhir where month(tgl)='$bulan' ORDER BY id_saldo_akhir  DESC LIMIT 1");
                     while ($data = mysqli_fetch_array($sql)) {
                       ?>
                                                   <div class="d-flex align-items-center">

@@ -14,12 +14,11 @@ $cek=mysqli_num_rows($sql);
 		if($data['level']=="admin")
 		{
 			session_start();	
-			$_SESSION['id']=$data['id'];
+			$_SESSION['id']=$data['id_user'];
 			$_SESSION['nama']=$data['nama'];
 			$_SESSION['rt']=$data['rt'];
 			$_SESSION['rw']=$data['rw'];
-			$_SESSION['alamat']=$data['alamat'];
-			$_SESSION['umur']=$data['umur'];										
+			$_SESSION['alamat']=$data['alamat'];							
 			$_SESSION['pekerjaan']=$data['pekerjaan'];
 			$_SESSION['no_telp']=$data['no_telp'];
 			$_SESSION['status']=$data['status'];			
@@ -27,7 +26,7 @@ $cek=mysqli_num_rows($sql);
 			$_SESSION['username']=$data['username'];
 			$_SESSION['password']=$data['password'];			
 
-
+// print_r($_SESSION);
 			header('location:admin/index.php?url=dashboard');
 		}
 		else if ($data['level']=="anggota") 
@@ -52,11 +51,11 @@ $cek=mysqli_num_rows($sql);
 	else
 	{
 		?>
-		<script type="text/javascript">
-			alert ('Username Dan Password Anda Salah.');
-			window.location='index.php'
-		</script>
-		<?php
+<script type="text/javascript">
+alert('Username Dan Password Anda Salah.');
+window.location = 'index.php'
+</script>
+<?php
 	}
 
 ?>
