@@ -86,7 +86,9 @@
                                                   <h5 class="card-title text-white">Saldo Masuk<span></span></h5>
                                                   <?php
 										require '../config/config.php';
-										$sql = mysqli_query($koneksi,"SELECT sum(jml_trx) as jumlah FROM `trx` WHERE `keterangan`='saldo_masuk'");
+                                                  $bulan =  date('m', strtotime(date('Y-m-d')));
+
+										$sql = mysqli_query($koneksi,"SELECT sum(jml_trx) as jumlah FROM `trx` WHERE `keterangan`='saldo_masuk' and month(tgl)='$bulan'");
 										while ($data = mysqli_fetch_array($sql)) {
 											?>
                                                   <div class="d-flex align-items-center">
@@ -117,7 +119,7 @@
                                                   <h5 class="card-title text-white">Saldo Akhir<span></span></h5>
                                                   <?php
 										require '../config/config.php';
-										$sql = mysqli_query($koneksi,"SELECT * FROM saldo_akhir ORDER BY id_saldo_akhir DESC LIMIT 1");
+										$sql = mysqli_query($koneksi,"SELECT * FROM saldo_akhir where month(tgl)='$bulan' ORDER BY id_saldo_akhir DESC LIMIT 1");
 										while ($data = mysqli_fetch_array($sql)) {
 											?>
                                                   <div class="d-flex align-items-center">
@@ -148,8 +150,12 @@
                                                   <h5 class="card-title text-white">Saldo Keluar <span></span></h5>
                                                   <?php
 										require '../config/config.php';
-										$sql = mysqli_query($koneksi,"SELECT sum(jml_trx) as jumlah FROM `trx` WHERE `keterangan`='saldo_keluar'");
-										while ($data = mysqli_fetch_array($sql)) {
+										$sql = mysqli_query($koneksi,"SELECT sum(jml_trx) as jumlah FROM `trx` WHERE `keterangan`='saldo_keluar' and month(tgl)='$bulan'");
+                                                  $rows = mysqli_num_rows($sql);
+                                                  if($rows<1){
+                                                       echo "Tidak ada data";
+                                                  }else{
+                                                       while ($data = mysqli_fetch_array($sql)) {
 											?>
                                                   <div class="d-flex align-items-center">
                                                        <div
@@ -163,76 +169,46 @@
                                                   <span class="text-white small pt-1 fw-bold">Saldo Keluar</span> <span
                                                        class="text-white small pt-2 ps-1">yang di gunakan untuk kegiatan
                                                        acara</span>
-                                                  <?php } ?>
+                                                  <?php
+                                              }
+                                               ?>
                                                   <div class="mt-3 text-end">
                                                        <a href="?url=lap_acara" class="text-white">Lihat Detail <i
                                                                  class="bi bi-chevron-double-right"></i></a>
                                                   </div>
-                                             </div>
-                                        </div>
-                                   </div>
-
-                                   <div class="col-xxl-4 col-md-4">
-                                        <div class="card info-card sales-card bg-danger">
-                                             <div class="card-body">
-                                                  <h5 class="card-title text-white">Total Keseluruan Saldo<span></span>
-                                                  </h5>
                                                   <?php
-										require '../config/config.php';
-										$sql = mysqli_query($koneksi,"select jml_trx as jmlah from trx where month(tgl)=07");
-										while ($data = mysqli_fetch_array($sql)) {
-											$kocak = $data['jmlah'];
-											
-												?>
-                                                  <div class="d-flex align-items-center">
+                                                  }
+										// while ($data = mysqli_fetch_array($sql)) {
+										// 	?>
+                                                  <!-- <div class="d-flex align-items-center">
                                                        <div
                                                             class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                                                            <i class="ri-exchange-dollar-line"></i>
+                                                            <i class="ri-inbox-unarchive-fill"></i>
                                                        </div>
                                                        <div class="ps-3">
-                                                            <h6>Rp.<?php echo 's';
-												
-												?></h6>
+                                                            <h6>Rp.<?= number_format($data['jumlah']); ?></h6>
                                                        </div>
                                                   </div>
-                                                  <span class="text-white small pt-1 fw-bold">Total Saldo Ke
-                                                       Seluruhan</span> <span class="text-white small pt-2 ps-1">yang
-                                                       terkumpul dari anggota/masyarakat</span>
+                                                  <span class="text-white small pt-1 fw-bold">Saldo Keluar</span> <span
+                                                       class="text-white small pt-2 ps-1">yang di gunakan untuk kegiatan
+                                                       acara</span> -->
                                                   <?php
-											// }else{
-
-											?>
-                                                  <div class="d-flex align-items-center">
-                                                       <div
-                                                            class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                                                            <i class="ri-exchange-dollar-line"></i>
-                                                       </div>
-                                                       <div class="ps-3">
-                                                            <h6>Rp.<?php echo 'kocak'
-												
-												?></h6>
-                                                       </div>
-                                                  </div>
-                                                  <span class="text-white small pt-1 fw-bold">Total Saldo Ke
-                                                       Seluruhan</span> <span class="text-white small pt-2 ps-1">yang
-                                                       terkumpul dari anggota/masyarakat</span>
-                                                  <?php
-										}
-									//  }
-									  ?>
-                                                  <div class="mt-3 text-end">
-                                                       <a href="?url=lap_keuangan" class="text-white">Lihat Detail <i
+                                             //  }
+                                               ?>
+                                                  <!-- <div class="mt-3 text-end">
+                                                       <a href="?url=lap_acara" class="text-white">Lihat Detail <i
                                                                  class="bi bi-chevron-double-right"></i></a>
-                                                  </div>
+                                                  </div> -->
                                              </div>
                                         </div>
                                    </div>
-
 
                                    <p>asdas</p>
                                    <?php
-							require '../config/config.php';
-										$sql = mysqli_query($koneksi,"select jml_trx as jmlah from trx where month(tgl)=07");
+							require '../config/config.php';                    
+                                   $bulan =  date('m', strtotime(date('Y-m-d')));
+
+										$sql = mysqli_query($koneksi,"select jml_trx as jmlah from trx where month(tgl)='bulan'");
 								
 								$rows = mysqli_num_rows($sql);
 								// $kocak = $data['jmlah'];

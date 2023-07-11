@@ -186,25 +186,25 @@
                               <?php
 						require '../config/config.php';
 						$no = 1;
-						$sql = mysqli_query($koneksi,"select * from keuangan  order by tgl DESC");
+                              $bulan =  date('m', strtotime(date('Y-m-d')));
+						$sql = mysqli_query($koneksi,"select * from trx inner join users on users.id_user=trx.id_user inner join acara on acara.id_trx=trx.id_trx and month(trx.tgl)='$bulan' order by tgl DESC");
 						while ($data = mysqli_fetch_array($sql)) {
 							?>
                               <tr>
                                    <td><?= $no++; ?></td>
                                    <td><?= $data['nama']; ?></td>
                                    <td><?= $data['tgl']; ?></td>
-                                   <td><?= $data['typeuang']; ?></td>
-                                   <td>Rp.<?= number_format($data['saldo_akhir']); ?></td>
+                                   <td><?= $data['nama_acara']; ?></td>
+                                   <td>Rp.<?= number_format($data['jml_trx']); ?></td>
 
                                    <td>
-                                        <?php
-									if($data['status'] == 'kirim'){ ?>
-                                        <span class="badge bg-warning "><?= $data['status']; ?></span>
-                                        <?php } elseif ($data['status'] == 'terima') { ?>
-                                        <span class="badge bg-primary "><?= $data['status']; ?></span>
-                                        <?php } elseif ($data['status'] == 'tidak terima') { ?>
-                                        <span class="badge bg-danger "><?= $data['status']; ?></span>
-                                        <?php }?>
+                                    <?= $data['keterangan']; ?>
+                                        <!-- <?php
+									if($data['keterangan'] == 'uang_masuk'){ ?>
+                                        <span class="badge bg-warning "> saldo masuk</span>
+                                        <?php } elseif ($data['keterangan'] == 'uang_keluar') { ?>
+                                        <span class="badge bg-primary ">saldo_keluar</span>
+                                        <?php }?> -->
                                    </td>
                                    <td class="text-center">
 
