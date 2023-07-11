@@ -32,7 +32,7 @@ $cek=mysqli_num_rows($sql);
 		else if ($data['level']=="anggota") 
 		{
 			session_start();
-			$_SESSION['id']=$data['id'];
+			$_SESSION['id']=$data['id_user'];
 			$_SESSION['nama']=$data['nama'];
 			$_SESSION['rt']=$data['rt'];
 			$_SESSION['rw']=$data['rw'];

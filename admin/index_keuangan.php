@@ -178,13 +178,15 @@
                                    <th>Tanggal</th>
                                    <th>Kategori</th>
                                    <th>Uang</th>
+                                   <th>Keterangan</th>
                                    <th>Status</th>
-                                   <th style="width:130px"></th>
+                                   <th style="width:130px">aksi</th>
                               </tr>
                          </thead>
                          <tbody>
                               <?php
 						require '../config/config.php';
+                              include '../config/getbln.php';
 						$no = 1;
                               $bulan =  date('m', strtotime(date('Y-m-d')));
 						$sql = mysqli_query($koneksi,"select * from trx inner join users on users.id_user=trx.id_user inner join acara on acara.id_trx=trx.id_trx and month(trx.tgl)='$bulan' order by tgl DESC");
@@ -198,20 +200,22 @@
                                    <td>Rp.<?= number_format($data['jml_trx']); ?></td>
 
                                    <td>
-                                    <?= $data['keterangan']; ?>
-                                        <!-- <?php
-									if($data['keterangan'] == 'uang_masuk'){ ?>
-                                        <span class="badge bg-warning "> saldo masuk</span>
-                                        <?php } elseif ($data['keterangan'] == 'uang_keluar') { ?>
-                                        <span class="badge bg-primary ">saldo_keluar</span>
-                                        <?php }?> -->
+                                    <?= getStatus($data['keterangan']); ?>
+                                   </td>
+                                   <td>
+                                        <?php 
+									if($data['status_trx'] == 'kirim'){ ?>
+                                                  <span class="badge bg-warning "><?= $data['status_trx']; ?></span>
+									<?php } else if($data['status_trx'] == 'terima'){ ?>
+										<span class="badge bg-primary "><?= $data['status_trx']; ?></span>
+									<?php }?>
                                    </td>
                                    <td class="text-center">
 
                                         <?php
-									if($data['status'] == 'kirim'){ ?>
+									if($data['status_trx'] == 'kirim'){ ?>
                                         <button type="button" class="btn btn-warning" data-bs-toggle="modal"
-                                             data-bs-target="#MyV<?= $data['id']; ?>">
+                                             data-bs-target="#MyV<?= $data['id_trx']; ?>">
                                              <span class="icon text-white">
                                                   <i class="bi bi-check-circle-fill"></i>
                                              </span>
@@ -225,15 +229,9 @@
                                              </span>
                                         </a>
 
-                                        <?php } elseif ($data['status'] == 'terima') { ?>
+                                        <?php } else if ($data['status_trx'] == 'terima') { ?>
                                         <button type="button" class="btn btn-secondary" data-bs-toggle="modal"
-                                             data-bs-target="#MyView<?= $data['id']; ?>">
-                                             <span class="icon text-white">
-                                                  <i class="bi bi-lock-fill"></i>
-                                             </span>
-                                        </button>
-                                        <?php } elseif ($data['status'] == 'tidak terima') { ?>
-                                        <button type="button" class="btn btn-secondary">
+                                             data-bs-target="#MyView<?= $data['id_trx']; ?>">
                                              <span class="icon text-white">
                                                   <i class="bi bi-lock-fill"></i>
                                              </span>
@@ -247,7 +245,7 @@
 
 
                               <!-- Modal view -->
-                              <div class="modal fade" id="MyView<?= $data['id']; ?>" data-bs-backdrop="static"
+                              <div class="modal fade" id="MyView<?= $data['id_trx']; ?>" data-bs-backdrop="static"
                                    data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel"
                                    aria-hidden="true">
                                    <div class="modal-dialog modal-dialog-scrollable modal-lg">
@@ -313,15 +311,15 @@
                                                                            <div class="col-sm-7 fs-4">
 
                                                                                 <?php
-																	if($data['status'] == 'kirim'){ ?>
+																	if($data['status_trx'] == 'kirim'){ ?>
                                                                                 <span
-                                                                                     class="badge bg-warning "><?= $data['status']; ?></span>
-                                                                                <?php } elseif ($data['status'] == 'terima') { ?>
+                                                                                     class="badge bg-warning "><?= $data['status_trx']; ?></span>
+                                                                                <?php } elseif ($data['status_trx'] == 'terima') { ?>
                                                                                 <span
-                                                                                     class="badge bg-primary "><?= $data['status']; ?></span>
-                                                                                <?php } elseif ($data['status'] == 'tidak terima') { ?>
+                                                                                     class="badge bg-primary "><?= $data['status_trx']; ?></span>
+                                                                                <?php } elseif ($data['status_trx'] == 'tidak terima') { ?>
                                                                                 <span
-                                                                                     class="badge bg-danger "><?= $data['status']; ?></span>
+                                                                                     class="badge bg-danger "><?= $data['status_trx']; ?></span>
                                                                                 <?php }?>
 
 
@@ -367,7 +365,7 @@
                               <!-- end Modal view -->
 
                               <!-- Modal validasi view -->
-                              <div class="modal fade" id="MyV<?= $data['id']; ?>" data-bs-backdrop="static"
+                              <div class="modal fade" id="MyV<?= $data['id_trx']; ?>" data-bs-backdrop="static"
                                    data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel"
                                    aria-hidden="true">
                                    <div class="modal-dialog modal-dialog-scrollable modal-lg">
@@ -409,7 +407,7 @@
                                                                                 </b></label>
                                                                            <div class="col-sm-7">
                                                                                 <input type="text" class="form-control"
-                                                                                     value="<?= $data['typeuang']; ?>"
+                                                                                     value="<?= $data['nama_acara']; ?>"
                                                                                      readonly>
                                                                            </div>
                                                                       </div>
@@ -421,7 +419,7 @@
                                                                            <div class="col-sm-7">
                                                                                 <input type="text"
                                                                                      class="form-control form-control-lg"
-                                                                                     value="Rp.<?= number_format($data['saldo_akhir']) ?>"
+                                                                                     value="Rp.<?= number_format($data['jml_trx']) ?>"
                                                                                      readonly>
                                                                            </div>
                                                                       </div>
@@ -432,7 +430,7 @@
                                                                            <div class="col-sm-12">
                                                                                 <textarea type="text"
                                                                                      class="form-control" rows='3'
-                                                                                     readonly><?= $data['ket']; ?></textarea>
+                                                                                     readonly><?= getStatus($data['keterangan']); ?></textarea>
                                                                            </div>
                                                                       </div>
 
@@ -443,15 +441,15 @@
                                                                            <div class="col-sm-7 fs-4">
 
                                                                                 <?php
-																	if($data['status'] == 'kirim'){ ?>
+																	if($data['status_trx'] == 'kirim'){ ?>
                                                                                 <span
-                                                                                     class="badge bg-warning "><?= $data['status']; ?></span>
-                                                                                <?php } elseif ($data['status'] == 'terima') { ?>
+                                                                                     class="badge bg-warning "><?= $data['status_trx']; ?></span>
+                                                                                <?php } elseif ($data['status_trx'] == 'terima') { ?>
                                                                                 <span
-                                                                                     class="badge bg-primary "><?= $data['status']; ?></span>
-                                                                                <?php } elseif ($data['status'] == 'tidak terima') { ?>
+                                                                                     class="badge bg-primary "><?= $data['status_trx']; ?></span>
+                                                                                <?php } elseif ($data['status_trx'] == 'tidak terima') { ?>
                                                                                 <span
-                                                                                     class="badge bg-danger "><?= $data['status']; ?></span>
+                                                                                     class="badge bg-danger "><?= $data['status_trx']; ?></span>
                                                                                 <?php }?>
 
 
@@ -502,8 +500,8 @@
                                                        <div class="row gx-5">
                                                             <div class="col-md-6 bg-info">
                                                                  <div class="p-3"><b>KeUangan
-                                                                           "<?= $data['typeuang']; ?>"
-                                                                           Rp.<?= number_format($data['saldo_akhir']) ?>
+                                                                           "<?= $data['nama_acara']; ?>"
+                                                                           Rp.<?= number_format($data['jml_trx']) ?>
                                                                       </b></div>
                                                             </div>
                                                             <div class="col-md-6 bg-secondary">
@@ -512,10 +510,10 @@
                                                                       <form method="POST">
                                                                            <input type="hidden" name="id"
                                                                                 class="form-control"
-                                                                                value="<?= $data['id']; ?>">
+                                                                                value="<?= $data['id_trx']; ?>">
                                                                            <input type="hidden" name="saldo_akhir"
                                                                                 class="form-control"
-                                                                                value="<?= $data['saldo_akhir']; ?>">
+                                                                                value="<?= $data['jml_trx']; ?>">
                                                                            <select class="form-select form-select-sm"
                                                                                 name="status" required>
                                                                                 <option value="" selected>-- Pilih --

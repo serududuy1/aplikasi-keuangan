@@ -53,173 +53,16 @@ echo date('m', strtotime(date('Y-m-d') . '- 1 month'));
                          <div class="col-md-12">
                               <br>
 
-                              <button type="button" class="btn btn-secondary" data-bs-toggle="modal"
+                              <!-- <button type="button" class="btn btn-secondary" data-bs-toggle="modal"
                                    data-bs-target="#TambahUsers">
                                    <span class="icon text-white">
                                         <i class="bi bi-plus-lg"></i> Add Anggota
                                    </span>
-                              </button>
+                              </button> -->
 
 
                               <!-- add Modal -->
-                              <div class="modal fade" id="TambahUsers" data-bs-backdrop="static"
-                                   data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel"
-                                   aria-hidden="true">
-                                   <div class="modal-dialog modal-dialog-scrollable modal-lg">
-                                        <div class="modal-content">
-                                             <div class="modal-header">
-                                                  <h1 class="modal-title fs-4" id="staticBackdropLabel"><b>Form Add
-                                                            Anggota</b></h1>
-                                                  <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                       aria-label="Close"></button>
-                                             </div>
-                                             <div class="modal-body">
-                                                  <form method="POST">
-                                                       <br>
-
-                                                       <div class="mb-3 row">
-                                                            <label class="col-sm-3 col-form-label"><b>Nama</b></label>
-                                                            <div class="col-sm-9">
-                                                                 <input type="text" name="nama" class="form-control"
-                                                                      placeholder="Input Nama Lengkap" required>
-                                                            </div>
-                                                       </div>
-
-                                                       <div class="mb-3 row">
-                                                            <label class="col-sm-3 col-form-label"><b>No
-                                                                      Telepon</b></label>
-                                                            <div class="col-sm-9">
-                                                                 <input type="text"
-                                                                      onkeypress="return hanyaAngka(event)"
-                                                                      name="no_telp" class="form-control"
-                                                                      placeholder="Input Nama No Telepon" required>
-                                                            </div>
-                                                       </div>
-
-                                                       <div class="mb-3 row">
-                                                            <label
-                                                                 class="col-sm-3 col-form-label"><b>Pekerjaan</b></label>
-                                                            <div class="col-sm-9">
-                                                                 <input type="text" name="pekerjaan"
-                                                                      class="form-control" placeholder="Input Pekerjaan"
-                                                                      required>
-                                                            </div>
-                                                       </div>
-
-                                                       <div class="mb-3 row">
-                                                            <label class="col-sm-3 col-form-label"><b>Tanggal
-                                                                      Lahir</b></label>
-                                                            <div class="col-sm-9">
-                                                                 <input id="tgllahir" type="text" name="tgl_lahir"
-                                                                      class="form-control" placeholder="DD/MM/YYYY"
-                                                                      required>
-                                                            </div>
-                                                       </div>
-
-
-                                                       <div class="mb-3 row">
-                                                            <label class="col-sm-3 col-form-label"><b>Alamat</b></label>
-                                                            <div class="col-sm-9">
-                                                                 <textarea type="text" name="alamat"
-                                                                      id="textarea_alamat" maxlength="65"
-                                                                      class="form-control" rows="4"
-                                                                      placeholder="Input Alamat Lengkap"
-                                                                      required></textarea>
-                                                                 <div class="mt-2" id="feedback_alamat"></div>
-                                                            </div>
-                                                       </div>
-
-                                                       <div class="mb-3 row">
-                                                            <label class="col-sm-3 col-form-label"><b>RT /
-                                                                      RW</b></label>
-                                                            <div class="col-sm-4">
-                                                                 <select class="form-select" name="rt" required>
-                                                                      <option value="" selected>-- Pilih RT</option>
-                                                                      <option value="1">001</option>
-                                                                      <option value="2">002</option>
-                                                                      <option value="3">003</option>
-                                                                      <option value="4">004</option>
-                                                                      <option value="5">005</option>
-                                                                      <option value="6">006</option>
-                                                                      <option value="7">007</option>
-                                                                      <option value="8">008</option>
-                                                                      <option value="9">009</option>
-                                                                      <option value="10">010</option>
-                                                                 </select>
-                                                            </div>
-
-                                                            <div class="col-sm-4">
-                                                                 <select class="form-select" name="rw" required>
-                                                                      <option value="" selected>-- Pilih RW</option>
-                                                                      <option value="1">01</option>
-                                                                      <option value="2">02</option>
-                                                                      <option value="3">03</option>
-                                                                      <option value="4">04</option>
-                                                                      <option value="5">05</option>
-                                                                      <option value="6">06</option>
-                                                                      <option value="7">07</option>
-                                                                      <option value="8">08</option>
-                                                                      <option value="9">09</option>
-                                                                      <option value="10">10</option>
-                                                                 </select>
-                                                            </div>
-                                                       </div>
-
-                                                       <div class="mb-3 row">
-                                                            <label class="col-sm-3 col-form-label"><b>User</b></label>
-                                                            <div class="col-sm-9">
-                                                                 <select class="form-select" name="usertype" required>
-                                                                      <option value="" selected>-- Pilih User</option>
-                                                                      <option value="ketua">Ketua</option>
-                                                                      <option value="wakil">Wakil</option>
-                                                                      <option value="anggota">Anggota</option>
-                                                                 </select>
-                                                            </div>
-                                                       </div>
-
-                                                       <div class="mb-3 row">
-                                                            <label class="col-sm-3 col-form-label"><b>Level</b></label>
-                                                            <div class="col-sm-9">
-                                                                 <select class="form-select" name="level" required>
-                                                                      <option value="" selected>-- Pilih Level</option>
-                                                                      <option value="admin">Administrator</option>
-                                                                      <option value="anggota">Anggota</option>
-                                                                 </select>
-                                                            </div>
-                                                       </div>
-
-                                                       <div class="mb-3 row">
-                                                            <label
-                                                                 class="col-sm-3 col-form-label"><b>Username</b></label>
-                                                            <div class="col-sm-9">
-                                                                 <input type="text" name="username" class="form-control"
-                                                                      placeholder="Input Username" required>
-                                                            </div>
-                                                       </div>
-
-                                                       <div class="mb-3 row">
-                                                            <label
-                                                                 class="col-sm-3 col-form-label"><b>Password</b></label>
-                                                            <div class="col-sm-9">
-                                                                 <input type="text" name="password" class="form-control"
-                                                                      placeholder="Input Password" required>
-                                                            </div>
-                                                       </div>
-
-                                                       <br>
-                                             </div>
-                                             <div class="modal-footer">
-                                                  <button type="button" class="btn btn-secondary"
-                                                       data-bs-dismiss="modal">Close</button>
-                                                  <button type="reset" class="btn btn-danger">Reset</button>
-                                                  <button type="submit" name="add"
-                                                       class="btn btn-primary">Simpan</button>
-                                                  </form>
-                                             </div>
-
-                                        </div>
-                                   </div>
-                              </div>
+                              
                               <!--end add Modal -->
 
 
@@ -229,65 +72,26 @@ echo date('m', strtotime(date('Y-m-d') . '- 1 month'));
                                    <thead>
                                         <tr>
                                              <th>No</th>
-                                             <th>Nama</th>
-                                             <th>Alamat</th>
-                                             <th>Level</th>
-                                             <th>Status</th>
-                                             <th style="width: 160px;"></th>
+                                             <th>Saldo Awal</th>
+                                             <th>Bulan</th>
                                         </tr>
                                    </thead>
                                    <tbody>
                                         <?php
   require '../config/config.php';
+  require '../config/getBln.php';
   $no = 1;
-  $sql = mysqli_query($koneksi,"select * from users order by status  DESC ");
+  $sql = mysqli_query($koneksi,"select *, month(tgl) as bln from saldo_awal order by tgl  DESC ");
   while ($data = mysqli_fetch_array($sql)) {
+     
    ?>
                                         <tr>
                                              <td><?= $no++; ?></td>
-                                             <td><?= $data['nama']; ?></td>
-                                             <td><?= $data['alamat']; ?></td>
-                                             <td><?= $data['usertype']; ?></td>
-                                             <td>
-                                                  <?php
-     if($data['status'] == 'aktif'){ ?>
-                                                  <span class="badge bg-primary "><?= $data['status']; ?></span>
-                                                  <?php } else {
-      if ($data['status'] == 'tidak aktif') { ?>
-                                                  <span class="badge bg-warning "><?= $data['status']; ?></span>
-                                                  <?php }}?>
-                                             </td>
-                                             <td>
-
-
-
-                                                  <a href="?url=edit&id=<?php echo $data['id']; ?>"
-                                                       class="btn btn-info btn-icon-split">
-                                                       <span class="icon text-white">
-                                                            <i class="bi bi-pencil-square"></i>
-                                                       </span>
-                                                  </a>
-
-
-                                                  <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                                       data-bs-target="#MyValidasi<?= $data['id']; ?>">
-                                                       <span class="icon text-white">
-                                                            <i class="bi bi-check-square"></i>
-                                                       </span>
-                                                  </button>
-
-
-
-                                                  <a href="del.php?id=<?php echo $data['id']; ?>"
-                                                       class="btn btn-danger btn-icon-split"
-                                                       onclick="return confirm('Yakin Hapus Data Anggota ?')">
-                                                       <span class="icon text-white">
-                                                            <i class="bi bi-trash-fill"></i>
-                                                       </span>
-                                                  </a>
-
-                                             </td>
-
+                                             <td><?= rupiah($data['jml_saldo_awal']); ?></td>
+                                             
+                                             <td><?= getBulan($data['bln']); ?></td>
+                                             
+                                             
 
 
                                              <!-- edit Modal -->

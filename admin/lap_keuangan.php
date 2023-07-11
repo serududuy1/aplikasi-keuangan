@@ -98,27 +98,35 @@
 
                          <?php
 						require '../config/config.php';
-
+                              include '../config/getbln.php';
+                              $bulan =  date('m', strtotime(date('Y-m-d')));
 						if(isset($_POST['filter'])){
 							$mulai = $_POST['tgl_mulai'];
 							$selesai = $_POST['tgl_selesai'];
-							$rt = $_POST['rt'];
-							$rw = $_POST['rw'];
-
-
+                                   print_r($_POST);
 							if ($mulai!=null || $selesai!=null ) {
-$sql=mysqli_query($koneksi,"select * from keuangan where status='terima' and rt='$rt' and rw='$rw' and tgl between '$mulai' and '$selesai' "); 
+                              $sql=mysqli_query($koneksi,"select * from trx inner join users on users.id_user = trx.id_user 
+                                   inner join acara on acara.id_trx = trx.id_trx and  tgl between '$mulai' and '$selesai'  order by tgl desc");
+                                   $sql2 = mysqli_query($koneksi, "select sum(jml_trx) as total from trx where keterangan='saldo_masuk' and  tgl between '$mulai' and '$selesai' ");
+                                   $sql3 = mysqli_query($koneksi, "select sum(jml_trx) as total from trx where keterangan='saldo_keluar' and  tgl between '$mulai' and '$selesai' ");
 							} else {
-								$sql=mysqli_query($koneksi,"select * from keuangan where status='terima' order by tgl desc");
+								$sql=mysqli_query($koneksi,"select * from trx order by tgl desc");
 							}
 						} else {
-							$sql=mysqli_query($koneksi,"select * from keuangan where status='terima' order by tgl desc");
-
+							$sql=mysqli_query($koneksi,"select * from trx inner join users on users.id_user = trx.id_user 
+                                   inner join acara on acara.id_trx = trx.id_trx and month(trx.tgl)='$bulan' order by tgl desc");
+                                   $sql2 = mysqli_query($koneksi, "select sum(jml_trx) as total from trx where keterangan='saldo_masuk' and month(trx.tgl)='$bulan'");
+                                   $sql3 = mysqli_query($koneksi, "select sum(jml_trx) as total from trx where keterangan='saldo_keluar' and month(trx.tgl)='$bulan'");
 						} 
 						$no=1;
 						$total = 0;
 						while ($data=mysqli_fetch_array($sql)) { 
-						$total += $data['saldo_akhir'];              
+                                   while ($datas=mysqli_fetch_array($sql2)) { 
+                                        while ($data2=mysqli_fetch_array($sql3)) { 
+                                        
+                                             $total = $datas['total']-$data2['total'];              
+                                        }          
+                                   }
 							?>
 
                          <tr>
@@ -126,19 +134,13 @@ $sql=mysqli_query($koneksi,"select * from keuangan where status='terima' and rt=
                               <td><?= $data['nama']; ?></td>
                               <td><?= $data['tgl']; ?></td>
                               <td><?= $data['alamat']; ?></td>
-                              <td><?= $data['typeuang']; ?></td>
+                              <td><?= $data['nama_acara']; ?></td>
                               <td>
-                                   <?php
-									if($data['status'] == 'kirim'){ ?>
-                                   <span class="badge bg-warning "><?= $data['status']; ?></span>
-                                   <?php } elseif ($data['status'] == 'terima') { ?>
-                                   <span class="badge bg-primary "><?= $data['status']; ?></span>
-                                   <?php } elseif ($data['status'] == 'tidak terima') { ?>
-                                   <span class="badge bg-danger "><?= $data['status']; ?></span>
-                                   <?php }?>
+                                   <?= getStatus($data['keterangan']); ?>
+                                  
                               </td>
 
-                              <td>Rp.<?= number_format($data['saldo_akhir']); ?></td>
+                              <td>Rp.<?= number_format($data['jml_trx']); ?></td>
                               <td>
 
                                    <a href="lap_keuangan_pdf.php?id=<?php echo $data['id']; ?>&&nm=<?php echo $data['nama'];?>"

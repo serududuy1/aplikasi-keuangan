@@ -88,7 +88,7 @@
 										require '../config/config.php';
                                                   $bulan =  date('m', strtotime(date('Y-m-d')));
 
-										$sql = mysqli_query($koneksi,"SELECT sum(jml_trx) as jumlah FROM `trx` WHERE `keterangan`='saldo_masuk' and month(tgl)='$bulan'");
+										$sql = mysqli_query($koneksi,"SELECT sum(jml_trx) as jumlah FROM `trx` WHERE `keterangan`='saldo_masuk' and month(tgl)='$bulan' and status_trx='terima'");
 										while ($data = mysqli_fetch_array($sql)) {
 											?>
                                                   <div class="d-flex align-items-center">
@@ -150,7 +150,7 @@
                                                   <h5 class="card-title text-white">Saldo Keluar <span></span></h5>
                                                   <?php
 										require '../config/config.php';
-										$sql = mysqli_query($koneksi,"SELECT sum(jml_trx) as jumlah FROM `trx` WHERE `keterangan`='saldo_keluar' and month(tgl)='$bulan'");
+										$sql = mysqli_query($koneksi,"SELECT sum(jml_trx) as jumlah FROM `trx` WHERE `keterangan`='saldo_keluar' and status_trx='terima' and month(tgl)='$bulan'");
                                                   $rows = mysqli_num_rows($sql);
                                                   if($rows<1){
                                                        echo "Tidak ada data";

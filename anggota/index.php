@@ -53,7 +53,7 @@ if (!isset($_SESSION['id'])) {
 
               <?php
               require '../config/config.php';
-              $sql = mysqli_query($koneksi, "select * from users where id='$_SESSION[id]'");
+              $sql = mysqli_query($koneksi, "select * from users where id_user='$_SESSION[id]'");
               while ($data = mysqli_fetch_array($sql)) { 
                ?>
                <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown"> <img src="../assets/img/profile-img.png" alt="Profile" class="rounded-circle"> <span class="d-none d-md-block dropdown-toggle ps-2"><?php echo $data['nama']; ?></span> </a>
