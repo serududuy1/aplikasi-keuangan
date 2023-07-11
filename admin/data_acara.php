@@ -27,6 +27,7 @@
 						<br>
 
 						<form method="POST">
+						<input type="text" name="id" class="form-control" value="<?= $_SESSION['id']; ?>">
 							<div class="mb-3 row">
 								<label class="col-sm-4 col-form-label"><b>Tanggal</b></label>
 								<div class="col-sm-4">

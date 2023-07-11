@@ -187,51 +187,56 @@ if(isset($_POST['validasi_keuangan'])) {
 
 
 if(isset($_POST['add_acara'])) {
-
-    $tgl = $_POST['tgl'];
+    $id=$_POST['id'];
     $nm_acara = $_POST['nm_acara'];
     $alamat = $_POST['alamat'];
     $saldo_akhir = $_POST['saldo_akhir'];
     $uang2 = $_POST['uang_masuk2'];
     $keluar = $_POST['saldo_keluar'];
-    $ket = $_POST['ket'];
+    $tgl=date('Y-m-d', strtotime($_POST['tgl']));
 
-    $sql = mysqli_query($koneksi," insert into acara (tgl,nm_acara,alamat,saldo_akhir,saldo_keluar,ket) values ('$tgl','$nm_acara','$alamat','$saldo_akhir','$keluar','$ket') ");
+    $sql = "insert into trx (id_user,jml_trx, keterangan, status_trx, tgl) values ('$id','$keluar','saldo_keluar','terima','$tgl')";
+    $koneksi->query($sql);
+    $last_id = $koneksi->insert_id;
 
-
-
-    $sql = mysqli_query($koneksi,"select * from data_keuangan where id='1'");
-    while ($data = mysqli_fetch_array($sql)) {
-        $id2 = '1';
-        $klr = $data['saldo_keluar'];
-    }
-
-    $klr += $_POST['saldo_keluar'];
-
-    $sql = mysqli_query($koneksi," update data_keuangan set 
-        saldo_akhir='$uang2', saldo_awal='$uang2',saldo_masuk='0', saldo_keluar='$klr'  where id='$id2' ");
+// print_r($sql);
+    $sql2 = mysqli_query($koneksi," insert into acara (id_trx,nama_acara,tempat_acara) values ('$last_id','$nm_acara','$alamat') ");
+    $sql3 = mysqli_query($koneksi, "insert into saldo_akhir (id_trx, jml_trx,jml_saldo_akhir, tgl) values ('$last_id','$keluar','$uang2','$tgl')");
 
 
-    $sql = mysqli_query($koneksi,"select * from data_keuangan where id='1'");
-    while ($data = mysqli_fetch_array($sql)) {
-        $id2 = '1';
-    $total_saldo = $data['saldo_akhir'] + $data['saldo_keluar']; 
-    }    
+    // $sql = mysqli_query($koneksi,"select * from data_keuangan where id='1'");
+    // while ($data = mysqli_fetch_array($sql)) {
+    //     $id2 = '1';
+    //     $klr = $data['saldo_keluar'];
+    // }
+
+    // $klr += $_POST['saldo_keluar'];
+
+    // $sql = mysqli_query($koneksi," update data_keuangan set 
+    //     saldo_akhir='$uang2', saldo_awal='$uang2',saldo_masuk='0', saldo_keluar='$klr'  where id='$id2' ");
+
+
+    // $sql = mysqli_query($koneksi,"select * from data_keuangan where id='1'");
+    // while ($data = mysqli_fetch_array($sql)) {
+    //     $id2 = '1';
+    // $total_saldo = $data['saldo_akhir'] + $data['saldo_keluar']; 
+    // }    
 
 
 
-    $sql = mysqli_query($koneksi," update data_keuangan set total_saldo='$total_saldo' where id='$id2' ");
+    // $sql = mysqli_query($koneksi," update data_keuangan set total_saldo='$total_saldo' where id='$id2' ");
 
 
-    if ($sql) {
+    if ($sql3) {
         ?>
         <script type="text/javascript">
-            alert('Data Berhasil Di Simpan');
+            alert('Data Berhasil Di Simpan<?=$last_id;?>');
             window.location = "index.php?url=list_acara";
         </script>
 
 
-    <?php }
+    <?php 
+    }
 };
 
 
