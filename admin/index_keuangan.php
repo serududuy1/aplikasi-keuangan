@@ -189,7 +189,7 @@
                               include '../config/getbln.php';
 						$no = 1;
                               $bulan =  date('m', strtotime(date('Y-m-d')));
-						$sql = mysqli_query($koneksi,"select * from trx inner join users on users.id_user=trx.id_user inner join acara on acara.id_trx=trx.id_trx and month(trx.tgl)='$bulan' order by tgl DESC");
+						$sql = mysqli_query($koneksi,"select * from trx inner join users on users.id_user=trx.id_user inner join acara on acara.id_trx=trx.id_trx and month(trx.tgl)='$bulan' and keterangan='saldo_masuk' order by tgl DESC");
 						while ($data = mysqli_fetch_array($sql)) {
 							?>
                               <tr>

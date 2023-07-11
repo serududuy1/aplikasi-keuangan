@@ -173,35 +173,9 @@ if(isset($_POST['validasi_keuangan'])) {
     $id = $_POST['id'];
     $status = $_POST['status'];
     $saldo_masuk = $_POST['saldo_akhir'];
-// echo $id;
     $sql = mysqli_query($koneksi," update trx set status_trx='$status' where id_trx='$id' ");
 
-    // $sql = mysqli_query($koneksi,"select * from data_keuangan where id='1'");
-    // while ($data = mysqli_fetch_array($sql)) {
-    //     $id2 = '1';
-    //     $saldo_awal = $data['saldo_akhir'];
-    //     $hasil = $data['saldo_akhir'];
-    // }
-    
-    // if ($_POST['status'] == 'terima') {
-    //     $hasil += $_POST['saldo_akhir'];
-        
-    // }
-
-    // $sql = mysqli_query($koneksi," update data_keuangan set  saldo_akhir='$hasil' where id='$id2' ");
-
-    // $sql = mysqli_query($koneksi,"select * from data_keuangan where id='1'");
-    // while ($data = mysqli_fetch_array($sql)) {
-    //     $id2 = '1';
-    //     $total_saldo =  $data['saldo_akhir'] + $data['saldo_keluar'];
-    // }
-    // $sql = mysqli_query($koneksi," update data_keuangan set  
-    //     total_saldo='$total_saldo', saldo_masuk='$saldo_masuk', saldo_awal='$saldo_awal' where id='$id2' ");
-
-
-
     if ($sql) {
-        // print_r($sql);
         ?>
         <script type="text/javascript">
             alert('Data Berhasil Di Validasi');

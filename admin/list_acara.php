@@ -59,27 +59,27 @@
 
 
 						if ($mulai!=null || $selesai!=null ) {
-							$sql=mysqli_query($koneksi,"select * from acara where  tgl between '$mulai' and '$selesai' "); 
+							$sql=mysqli_query($koneksi,"select * from acara inner join trx on trx.id_trx = acara.id_trx and  tgl between '$mulai' and '$selesai' "); 
 						} else {
-							$sql=mysqli_query($koneksi,"select * from acara order by tgl desc");
+							$sql=mysqli_query($koneksi,"select * from acara inner join trx on trx.id_trx = acara.id_trx order by tgl desc");
 						}
 					} else {
-						$sql=mysqli_query($koneksi,"select * from acara order by tgl desc");
+						$sql=mysqli_query($koneksi,"select * from acara inner join trx on trx.id_trx = acara.id_trx and keterangan='saldo_keluar' order by tgl desc");
 
 					} 
 					$no=1;
 					$total = 0;
 					while ($data=mysqli_fetch_array($sql)) {
-						$total += $data['saldo_keluar'];               
+						$total += $data['jml_trx'];               
 						?>
 
 
 						<tr>
 							<td><?= $no++; ?></td>
 							<td><?= $data['tgl']; ?></td>
-							<td><?= $data['nm_acara']; ?></td>                              
-							<td><?= $data['alamat']; ?></td>
-							<td>Rp.<?= number_format($data['saldo_keluar']); ?></td>
+							<td><?= $data['nama_acara']; ?></td>                              
+							<td><?= $data['tempat_acara']; ?></td>
+							<td>Rp.<?= number_format($data['jml_trx']); ?></td>
 							<td style="width : 100px;">
 
 								<a href="lap_acara_pdf.php?id=<?php echo $data['id']; ?>&&nm=<?php echo $data['nm_acara'];?>"

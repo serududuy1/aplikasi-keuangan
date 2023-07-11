@@ -50,27 +50,21 @@
 								</div>
 							</div>
 
-							<div class="mb-3 row">
-								<label class="col-sm-4 col-form-label"><b>Keterangan</b></label>
-								<div class="col-sm-8">
-									<textarea id="textarea_ket" maxlength="65" type="text" name="ket" rows="4" class="form-control" placeholder="Input Keterangan" required></textarea>
-									<div class="mt-2" id="feedback_ket"></div>
-								</div>
-							</div>
 
 
 							<div class="mb-3 row perhitungan">
-								<label class="col-sm-4 col-form-label"><b>Saldo Awal</b></label>
+								<label class="col-sm-4 col-form-label"><b>Total Saldo</b></label>
 								<div class="col-sm-8">
 									<div class="input-group mb-3">
 										<?php
 										require '../config/config.php';
 										$no = 1;
-										$sql = mysqli_query($koneksi,"select * from data_keuangan");
+										$bulan =  date('m', strtotime(date('Y-m-d')));
+										$sql = mysqli_query($koneksi,"SELECT * FROM saldo_akhir where month(tgl)='$bulan' ORDER BY id_saldo_akhir DESC LIMIT 1");
 										while ($data = mysqli_fetch_array($sql)) {
 											?>										
 											<span class="input-group-text">Rp.</span>
-											<input type="text" id="bil1" name="saldo_akhir" value="<?= $data['saldo_akhir']; ?>" class="form-control form-control-lg" readonly>
+											<input type="text" id="bil1" name="saldo_akhir" value="<?= $data['jml_saldo_akhir']; ?>" class="form-control form-control-lg" readonly>
 										<?php } ?>
 									</div>
 								</div>
@@ -109,29 +103,6 @@
 				</div>
 			</div>
 			<div class="col-md-4">
-
-          <div class="col-xxl-12 col-md-12">
-            <div class="card info-card sales-card">
-              <div class="card-body">
-                <h5 class="card-title">Total Saldo<span></span></h5>
-                <?php
-                require '../config/config.php';
-                $sql = mysqli_query($koneksi,"select * from data_keuangan where id='1'");
-                while ($data = mysqli_fetch_array($sql)) {
-                  ?>
-                  <div class="d-flex align-items-center">
-                    <div class="ps-3">
-                      <h3>Rp.<?= number_format($data['saldo_akhir']); ?></h3>
-                    </div>
-                  </div>
-                  <span class="text-success small pt-1 fw-bold">Total Saldo</span> <span class="text-muted small pt-2 ps-1">saat ini yang di kumpulkan dari anggota dan masyarakat</span>
-                  <?php } ?>
-                <div class="mt-3 text-end">
-                  <a href="?url=lap_keuangan" class="" >Lihat Detail <i class="bi bi-chevron-double-right"></i></a>
-                </div>
-              </div>
-            </div>          
-          </div>
 
           
 
