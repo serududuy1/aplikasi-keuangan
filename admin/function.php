@@ -171,15 +171,19 @@ if(isset($_POST['validasi_anggota'])) {
 
 if(isset($_POST['validasi_keuangan'])) {
     $id = $_POST['id'];
+    $tgl=$_POST['tgl'];
     $status = $_POST['status'];
     $saldo_masuk = $_POST['saldo_akhir'];
+    $total = $_POST['total'];
+    $total2 = $total+$saldo_masuk;
     $sql = mysqli_query($koneksi," update trx set status_trx='$status' where id_trx='$id' ");
-
-    if ($sql) {
+    $sql3 = mysqli_query($koneksi, "insert into saldo_akhir (id_trx, jml_trx,jml_saldo_akhir, tgl) values ('$id','$saldo_masuk','$total2','$tgl')");
+        
+    if ($sql3) {
         ?>
         <script type="text/javascript">
             alert('Data Berhasil Di Validasi');
-            window.location = "?url=index_keuangan";
+            // window.location = "?url=index_keuangan";
         </script>
     <?php 
     }
@@ -198,33 +202,9 @@ if(isset($_POST['add_acara'])) {
     $sql = "insert into trx (id_user,jml_trx, keterangan, status_trx, tgl) values ('$id','$keluar','saldo_keluar','terima','$tgl')";
     $koneksi->query($sql);
     $last_id = $koneksi->insert_id;
-
-// print_r($sql);
     $sql2 = mysqli_query($koneksi," insert into acara (id_trx,nama_acara,tempat_acara) values ('$last_id','$nm_acara','$alamat') ");
     $sql3 = mysqli_query($koneksi, "insert into saldo_akhir (id_trx, jml_trx,jml_saldo_akhir, tgl) values ('$last_id','$keluar','$uang2','$tgl')");
 
-
-    // $sql = mysqli_query($koneksi,"select * from data_keuangan where id='1'");
-    // while ($data = mysqli_fetch_array($sql)) {
-    //     $id2 = '1';
-    //     $klr = $data['saldo_keluar'];
-    // }
-
-    // $klr += $_POST['saldo_keluar'];
-
-    // $sql = mysqli_query($koneksi," update data_keuangan set 
-    //     saldo_akhir='$uang2', saldo_awal='$uang2',saldo_masuk='0', saldo_keluar='$klr'  where id='$id2' ");
-
-
-    // $sql = mysqli_query($koneksi,"select * from data_keuangan where id='1'");
-    // while ($data = mysqli_fetch_array($sql)) {
-    //     $id2 = '1';
-    // $total_saldo = $data['saldo_akhir'] + $data['saldo_keluar']; 
-    // }    
-
-
-
-    // $sql = mysqli_query($koneksi," update data_keuangan set total_saldo='$total_saldo' where id='$id2' ");
 
 
     if ($sql3) {
@@ -240,27 +220,29 @@ if(isset($_POST['add_acara'])) {
 };
 
 
+
 //add keuangan admin
 if(isset($_POST['adduang'])) {
     date_default_timezone_set('Asia/Jakarta'); 
-    $tgl=date('d-m-Y'); 
+    $tgl=date('Y-m-d'); 
     $nama = $_POST['nama'];
-    $rt = $_POST['rt'];
-    $rw = $_POST['rw'];
-    $alamat = $_POST['alamat'];
     $typeuang = $_POST['typeuang'];
     $saldo_akhir = $_POST['saldo_akhir'];
+    $total = $_POST['total'];
     $sts = 'kirim';
-    $ket = $_POST['ket'];
-
-    $sql = mysqli_query($koneksi," insert into keuangan (nama,rt,rw,alamat,tgl,saldo_akhir,status,typeuang,ket) values ('$nama','$rt','$rw','$alamat','$tgl','$saldo_akhir','$sts','$typeuang','$ket') ");
-
-    if ($sql) {
-        ?>
+    $bulan =  date('m', strtotime(date('Y-m-d')));
+    $total = $total+$saldo_akhir;
+        $sql = "insert into trx (id_user,jml_trx, keterangan, status_trx, tgl) values ('$nama','$saldo_akhir','saldo_masuk','kirim','$tgl')";
+        $koneksi->query($sql);
+        $last_id = $koneksi->insert_id;
+        $sql2 = mysqli_query($koneksi," insert into acara (id_trx,nama_acara) values ('$last_id','$typeuang') ");
+        
+        if ($sql2) {
+            ?>
         <script type="text/javascript">
             alert('Data Berhasil Di Kirim');
             window.location = "index.php?url=index_keuangan";
-        </script>
+            </script>
     <?php }
 };
 

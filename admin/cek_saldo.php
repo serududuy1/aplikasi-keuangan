@@ -119,8 +119,18 @@
                                                   <h5 class="card-title text-white">Saldo Akhir<span></span></h5>
                                                   <?php
 										require '../config/config.php';
-										$sql = mysqli_query($koneksi,"SELECT * FROM saldo_akhir where month(tgl)='$bulan' ORDER BY id_saldo_akhir DESC LIMIT 1");
-										while ($data = mysqli_fetch_array($sql)) {
+										$sql = mysqli_query($koneksi,"SELECT * FROM saldo_akhir where month(tgl)='$bulan'  ORDER BY id_saldo_akhir DESC LIMIT 1");
+										$rows = mysqli_num_rows($sql);
+                                                  if($rows<1){
+                                                       ?>
+                                                       <div class="ps-3">
+                                                            <h6>Rp.0</h6>
+                                                       </div>
+                                                       <span class="text-white small pt-1 fw-bold">Saldo Akhir</span> <span
+                                                       class="small pt-2 ps-1 text-white">saat ini yang di kumpulkan
+                                                       dari anggota/masyarakat</span>
+                                                       <?php
+                                                  }else{while ($data = mysqli_fetch_array($sql)) {
 											?>
                                                   <div class="d-flex align-items-center">
                                                        <div
@@ -134,7 +144,7 @@
                                                   <span class="text-white small pt-1 fw-bold">Saldo Akhir</span> <span
                                                        class="small pt-2 ps-1 text-white">saat ini yang di kumpulkan
                                                        dari anggota/masyarakat</span>
-                                                  <?php } ?>
+                                                  <?php }} ?>
                                                   <div class="mt-3 text-end">
                                                        <a href="?url=lap_keuangan" class="text-white">Lihat Detail <i
                                                                  class="bi bi-chevron-double-right"></i></a>

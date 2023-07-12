@@ -48,61 +48,30 @@
                                              aria-label="Close"></button>
                                    </div>
                                    <div class="modal-body">
-
+                                 
 
                                         <form method="POST">
-                                             <div class="mb-2 mt-3 row">
-                                                  <label class="col-sm-3 col-form-label"><b>Nama </b></label>
-                                                  <div class="col-sm-8">
-                                                       <input type="text" name="nama" class="form-control"
-                                                            placeholder="input nama" required>
-                                                  </div>
-                                             </div>
-
-                                             <div class="mb-3 row">
-                                                  <label class="col-sm-3 col-form-label"><b>Alamat</b></label>
-                                                  <div class="col-sm-8">
-                                                       <textarea type="text" name="alamat" id="textarea_alamat"
-                                                            maxlength="65" class="form-control" rows="4"
-                                                            placeholder="Input alamat lengkap" required></textarea>
-                                                       <div class="mt-2" id="feedback_alamat"></div>
-                                                  </div>
-                                             </div>
-
 
                                              <div class="my-3 row">
-                                                  <label class="col-sm-3 col-form-label"><b>RT / RW</b></label>
+                                                  <label class="col-sm-3 col-form-label"><b>Nama</b></label>
                                                   <div class="col-sm-4">
-                                                       <select class="form-select" name="rt" required>
-                                                            <option value="" selected>-- Pilih RT</option>
-                                                            <option value="1">001</option>
-                                                            <option value="2">002</option>
-                                                            <option value="3">003</option>
-                                                            <option value="4">004</option>
-                                                            <option value="5">005</option>
-                                                            <option value="6">006</option>
-                                                            <option value="7">007</option>
-                                                            <option value="8">008</option>
-                                                            <option value="9">009</option>
-                                                            <option value="10">010</option>
+                                                       <select class="form-select" name="nama" required>
+                                                            <option value="" selected>-- Pilih Anggota</option>
+                                                       <?php
+                                   require '../config/config.php';
+                                   $no = 1;
+                                   $sql = mysqli_query($koneksi,"select * from users");
+                                   while ($datas = mysqli_fetch_array($sql)) {
+                                        ?>
+                                                            <option value="<?=$datas['id_user']?>"><?=$datas['nama']?></option>
+                                                            
+                                   <?php
+                                   }
+                                   ?>
                                                        </select>
                                                   </div>
 
-                                                  <div class="col-sm-4">
-                                                       <select class="form-select" name="rw" required>
-                                                            <option value="" selected>-- Pilih RW</option>
-                                                            <option value="1">01</option>
-                                                            <option value="2">02</option>
-                                                            <option value="3">03</option>
-                                                            <option value="4">04</option>
-                                                            <option value="5">05</option>
-                                                            <option value="6">06</option>
-                                                            <option value="7">07</option>
-                                                            <option value="8">08</option>
-                                                            <option value="9">09</option>
-                                                            <option value="10">10</option>
-                                                       </select>
-                                                  </div>
+                                                 
                                              </div>
 
                                              <div class="mb-3 mt-3 row">
@@ -110,7 +79,7 @@
                                                   <div class="col-sm-5">
                                                        <div class="input-group mb-1">
                                                             <input type="text" name="tgl"
-                                                                 value="<?php date_default_timezone_set('Asia/Jakarta'); echo date('d-m-Y'); ?>"
+                                                                 value="<?php date_default_timezone_set('Asia/Jakarta'); echo date('Y-m-d'); ?>"
                                                                  class="form-control text-center" readonly>
                                                             <span class="input-group-text"><i
                                                                       class="bi bi-calendar2-check-fill"></i></span>
@@ -133,7 +102,7 @@
 
 
                                              <div class="mb-2 mt-3 row">
-                                                  <label class="col-sm-3 col-form-label"><b>KeUangan</b></label>
+                                                  <label class="col-sm-3 col-form-label"><b>Keuangan</b></label>
                                                   <div class="col-sm-5">
                                                        <div class="input-group mb-1">
                                                             <span class="input-group-text">Rp.</span>
@@ -144,15 +113,7 @@
                                                   </div>
                                              </div>
 
-                                             <div class="mb-2 mt-3 row">
-                                                  <label class="col-sm-3 col-form-label"><b>Keterangan </b></label>
-                                                  <div class="col-sm-8">
-                                                       <textarea type="text" id="textarea_ket" maxlength="50" name="ket"
-                                                            class="form-control" placeholder="Input keterangan"
-                                                            required></textarea>
-                                                       <div class="mt-2" id="feedback_ket"></div>
-                                                  </div>
-                                             </div>
+                                            
 
                                              <br>
 
@@ -164,6 +125,7 @@
                                         <button type="submit" name="adduang" class="btn btn-primary">Simpan</button>
                                    </div>
                                    </form>
+
                               </div>
                          </div>
                     </div>
@@ -184,15 +146,15 @@
                               </tr>
                          </thead>
                          <tbody>
+                              <tr>
                               <?php
 						require '../config/config.php';
                               include '../config/getbln.php';
 						$no = 1;
                               $bulan =  date('m', strtotime(date('Y-m-d')));
-						$sql = mysqli_query($koneksi,"select * from trx inner join users on users.id_user=trx.id_user inner join acara on acara.id_trx=trx.id_trx and month(trx.tgl)='$bulan' and keterangan='saldo_masuk' order by tgl DESC");
+						$sql = mysqli_query($koneksi,"select * from trx inner join users on users.id_user=trx.id_user inner join acara on acara.id_trx=trx.id_trx and month(tgl)='$bulan' order by tgl DESC");
 						while ($data = mysqli_fetch_array($sql)) {
 							?>
-                              <tr>
                                    <td><?= $no++; ?></td>
                                    <td><?= $data['nama']; ?></td>
                                    <td><?= $data['tgl']; ?></td>
@@ -287,7 +249,7 @@
                                                                                 </b></label>
                                                                            <div class="col-sm-7">
                                                                                 <input type="text" class="form-control"
-                                                                                     value="<?= $data['typeuang']; ?>"
+                                                                                     value="<?= $data['nama_acara']; ?>"
                                                                                      readonly>
                                                                            </div>
                                                                       </div>
@@ -299,7 +261,7 @@
                                                                            <div class="col-sm-7">
                                                                                 <input type="text"
                                                                                      class="form-control form-control-lg"
-                                                                                     value="Rp.<?= number_format($data['saldo_akhir']) ?>"
+                                                                                     value="Rp.<?= number_format($data['jml_trx']) ?>"
                                                                                      readonly>
                                                                            </div>
                                                                       </div>
@@ -339,15 +301,7 @@
                                                                                      readonly><?= $data['alamat']; ?></textarea>
                                                                            </div>
                                                                       </div>
-                                                                      <div class="mb-2 row">
-                                                                           <label class="mb-2"><b>Keterangan
-                                                                                </b></label>
-                                                                           <div class="col-sm-12">
-                                                                                <textarea type="text"
-                                                                                     class="form-control" rows='3'
-                                                                                     readonly><?= $data['ket']; ?></textarea>
-                                                                           </div>
-                                                                      </div>
+                                                                     
 
                                                                  </div>
                                                             </div>
@@ -506,8 +460,26 @@
                                                             </div>
                                                             <div class="col-md-6 bg-secondary">
                                                                  <div class="p-3">
-
+                                                                 <?php
+                                  
+                                  $bulan =  date('m', strtotime(date('Y-m-d')));
+$sql2 = mysqli_query($koneksi,"SELECT * FROM saldo_akhir where month(tgl)='$bulan' ORDER BY id_saldo_akhir DESC LIMIT 1");
+$rows = mysqli_num_rows($sql2);
+if($rows<1){
+     $total = 0;
+     
+}else{
+     
+     while ($data2 = mysqli_fetch_array($sql2)) {
+          $total = $data2['jml_saldo_akhir'];
+          
+          
+     }
+}
+                                  ?>
                                                                       <form method="POST">
+                                        <input type="text" name='total' value='<?=$total?>'>
+                                        <input type="text" name="tgl" value='<?= $data['tgl']; ?>'>
                                                                            <input type="hidden" name="id"
                                                                                 class="form-control"
                                                                                 value="<?= $data['id_trx']; ?>">

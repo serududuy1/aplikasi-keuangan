@@ -26,8 +26,33 @@ $cek=mysqli_num_rows($sql);
 			$_SESSION['username']=$data['username'];
 			$_SESSION['password']=$data['password'];			
 
-// print_r($_SESSION);
+
+			// cek saldo awal;
+			$tgls=date('Y-m-d');
+			$bulan =  date('m', strtotime(date('Y-m-d')));
+			$sql2 = mysqli_query($koneksi,"SELECT * FROM saldo_awal where month(tgl)='$bulan' ORDER BY id_saldo_awal DESC LIMIT 1");
+			$rows = mysqli_num_rows($sql2);
+			if($rows<1){
+				$sql3 = mysqli_query($koneksi,"SELECT * FROM saldo_akhir where month(tgl)='$bulan' ORDER BY id_saldo_akhir DESC LIMIT 1");
+				while ($data3 = mysqli_fetch_array($sql3)) {
+					$total = $data3['jml_saldo_akhir'];
+					$id = $data3['id_saldo_akhir'];
+					$sql3 = mysqli_query($koneksi, "insert into saldo_awal (id_saldo_akhir,jml_saldo_awal, tgl) values ('$id','$total','$tgls')");
+					if($sql3){
+						// echo $sql3;
+						header('location:admin/index.php?url=dashboard');
+					}
+			   }
+			}else{
+				// echo "datanya udah ada";
+				header('location:admin/index.php?url=dashboard');
+			}
+
 			header('location:admin/index.php?url=dashboard');
+
+
+// print_r($_SESSION);
+			
 		}
 		else if ($data['level']=="anggota") 
 		{

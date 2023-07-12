@@ -35,7 +35,16 @@
                     require '../config/config.php';
                     $bulan =  date('m', strtotime(date('Y-m-d')));
                     $sql = mysqli_query($koneksi,"SELECT * FROM saldo_awal where month(tgl)='$bulan' ORDER BY `id_saldo_awal` DESC LIMIT 1");
-                    while ($data = mysqli_fetch_array($sql)) {
+                    $rows = mysqli_num_rows($sql);if($rows<1){
+                         ?>
+                         <div class="ps-3">
+                              <h6>Rp.0</h6>
+                         </div>
+                         <span class="text-white small pt-1 fw-bold">Saldo Akhir</span> <span
+                         class="small pt-2 ps-1 text-white">saat ini yang di kumpulkan
+                         dari anggota/masyarakat</span>
+                         <?php
+                    }else{ while ($data = mysqli_fetch_array($sql)) {
                       ?>
                                                   <div class="d-flex align-items-center">
                                                        <div
@@ -49,7 +58,7 @@
                                                   <span class="text-white small pt-1 fw-bold">Saldo Awal</span> <span
                                                        class="text-white small pt-2 ps-1">saat ini yang di kumpulkan
                                                        dari anggota/masyarakat</span>
-                                                  <?php } ?>
+                                                  <?php } }?>
                                                   <div class="mt-3 text-end">
                                                        <a href="?url=lap_keuangan" class="text-white">Lihat Detail <i
                                                                  class="bi bi-chevron-double-right"></i></a>
@@ -66,7 +75,7 @@
                                                   <?php
                     require '../config/config.php';
                     $bulan =  date('m', strtotime(date('Y-m-d')));
-                    $sql = mysqli_query($koneksi,"SELECT sum(jml_trx) as jumlah FROM `trx` WHERE `keterangan`='saldo_masuk' AND month(tgl)='$bulan' ");
+                    $sql = mysqli_query($koneksi,"SELECT sum(jml_trx) as jumlah FROM `trx` WHERE `keterangan`='saldo_masuk' AND status_trx='terima' AND month(tgl)='$bulan' ");
                     while ($data = mysqli_fetch_array($sql)) {
                       ?>
                                                   <div class="d-flex align-items-center">
