@@ -1,14 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.1
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 11 Jul 2023 pada 04.11
--- Versi server: 10.4.11-MariaDB
--- Versi PHP: 7.4.1
+-- Waktu pembuatan: 12 Jul 2023 pada 03.59
+-- Versi server: 10.4.27-MariaDB
+-- Versi PHP: 7.4.33
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -31,18 +30,18 @@ SET time_zone = "+00:00";
 CREATE TABLE `acara` (
   `id_acara` int(11) NOT NULL,
   `id_trx` int(11) NOT NULL,
-  `nama_acara` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `nama_acara` varchar(255) NOT NULL,
+  `tempat_acara` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data untuk tabel `acara`
 --
 
-INSERT INTO `acara` (`id_acara`, `id_trx`, `nama_acara`) VALUES
-(1, 2, 'infak'),
-(2, 3, 'kas'),
-(3, 4, 'kas'),
-(4, 5, 'dll');
+INSERT INTO `acara` (`id_acara`, `id_trx`, `nama_acara`, `tempat_acara`) VALUES
+(36, 73, 'uang kas', ''),
+(37, 74, 'infak', ''),
+(38, 75, 'uang kas', '');
 
 -- --------------------------------------------------------
 
@@ -56,17 +55,16 @@ CREATE TABLE `saldo_akhir` (
   `jml_trx` varchar(255) NOT NULL,
   `jml_saldo_akhir` varchar(255) NOT NULL,
   `tgl` date NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data untuk tabel `saldo_akhir`
 --
 
 INSERT INTO `saldo_akhir` (`id_saldo_akhir`, `id_trx`, `jml_trx`, `jml_saldo_akhir`, `tgl`) VALUES
-(1, 2, '100000', '100000', '2023-06-14'),
-(2, 3, '200000', '300000', '2023-06-15'),
-(3, 4, '500000', '800000', '2023-07-10'),
-(4, 5, '200000', '600000', '2023-07-11');
+(34, 73, '100000', '100000', '2023-06-12'),
+(35, 74, '900000', '1000000', '2023-06-12'),
+(36, 75, '1500000', '1500000', '2023-07-12');
 
 -- --------------------------------------------------------
 
@@ -79,14 +77,14 @@ CREATE TABLE `saldo_awal` (
   `id_saldo_akhir` int(11) NOT NULL,
   `jml_saldo_awal` varchar(255) NOT NULL,
   `tgl` date NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data untuk tabel `saldo_awal`
 --
 
 INSERT INTO `saldo_awal` (`id_saldo_awal`, `id_saldo_akhir`, `jml_saldo_awal`, `tgl`) VALUES
-(1, 2, '300000', '2023-07-01');
+(7, 36, '1500000', '2023-07-12');
 
 -- --------------------------------------------------------
 
@@ -99,18 +97,18 @@ CREATE TABLE `trx` (
   `id_user` int(11) NOT NULL,
   `jml_trx` varchar(255) NOT NULL,
   `keterangan` varchar(255) NOT NULL,
+  `status_trx` varchar(255) NOT NULL,
   `tgl` date NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data untuk tabel `trx`
 --
 
-INSERT INTO `trx` (`id_trx`, `id_user`, `jml_trx`, `keterangan`, `tgl`) VALUES
-(2, 3, '100000', 'saldo_masuk', '2023-06-14'),
-(3, 3, '200000', 'saldo_masuk', '2023-06-15'),
-(4, 3, '500000', 'saldo_masuk', '2023-07-03'),
-(5, 3, '200000', 'saldo_keluar', '2023-07-11');
+INSERT INTO `trx` (`id_trx`, `id_user`, `jml_trx`, `keterangan`, `status_trx`, `tgl`) VALUES
+(73, 3, '100000', 'saldo_masuk', 'terima', '2023-06-12'),
+(74, 5, '900000', 'saldo_masuk', 'terima', '2023-06-12'),
+(75, 3, '1500000', 'saldo_masuk', 'terima', '2023-07-12');
 
 -- --------------------------------------------------------
 
@@ -133,7 +131,7 @@ CREATE TABLE `users` (
   `username` varchar(30) NOT NULL,
   `password` varchar(200) NOT NULL,
   `level` enum('admin','anggota') NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data untuk tabel `users`
@@ -192,25 +190,25 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT untuk tabel `acara`
 --
 ALTER TABLE `acara`
-  MODIFY `id_acara` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_acara` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
 
 --
 -- AUTO_INCREMENT untuk tabel `saldo_akhir`
 --
 ALTER TABLE `saldo_akhir`
-  MODIFY `id_saldo_akhir` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_saldo_akhir` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 
 --
 -- AUTO_INCREMENT untuk tabel `saldo_awal`
 --
 ALTER TABLE `saldo_awal`
-  MODIFY `id_saldo_awal` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_saldo_awal` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT untuk tabel `trx`
 --
 ALTER TABLE `trx`
-  MODIFY `id_trx` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id_trx` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=76;
 
 --
 -- AUTO_INCREMENT untuk tabel `users`
@@ -226,7 +224,7 @@ ALTER TABLE `users`
 -- Ketidakleluasaan untuk tabel `acara`
 --
 ALTER TABLE `acara`
-  ADD CONSTRAINT `fk_acara` FOREIGN KEY (`id_trx`) REFERENCES `trx` (`id_trx`);
+  ADD CONSTRAINT `fk_acara` FOREIGN KEY (`id_trx`) REFERENCES `trx` (`id_trx`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Ketidakleluasaan untuk tabel `saldo_akhir`
