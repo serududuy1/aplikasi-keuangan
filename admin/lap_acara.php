@@ -65,28 +65,31 @@
 							$selesai = $_POST['tgl_selesai'];
 							
 
+							$bulan =  date('m', strtotime(date('Y-m-d')));
 							if ($mulai!=null || $selesai!=null ) {
-								$sql=mysqli_query($koneksi,"select * from acara where  tgl between '$mulai' and '$selesai' "); 
+								$sql=mysqli_query($koneksi,"select * from trx inner join users on users.id_user = trx.id_user 
+								inner join acara on acara.id_trx = trx.id_trx and  tgl between '$mulai' and '$selesai'  order by tgl desc"); 
 							} else {
-								$sql=mysqli_query($koneksi,"select * from acara order by tgl desc");
+								$sql=mysqli_query($koneksi,"select * from trx inner join users on users.id_user = trx.id_user 
+								inner join acara on acara.id_trx = trx.id_trx and month(trx.tgl)='$bulan' order by tgl desc");
 							}
 						} else {
-							$sql=mysqli_query($koneksi,"select * from acara order by tgl desc");
+							$sql=mysqli_query($koneksi,"select *, sum(jml_trx) as toll from trx inner join acara on acara.id_trx = trx.id_trx and keterangan='saldo_keluar' order by tgl desc");
 
 						} 
 						$no=1;
 						$total = 0;
 						while ($data=mysqli_fetch_array($sql)) {
-							$total += $data['saldo_keluar'];               
+							$total = $data['toll'];               
 							?>
 
 
 							<tr>
 								<td><?= $no++; ?></td>
 								<td><?= $data['tgl']; ?></td>
-								<td><?= $data['nm_acara']; ?></td>                              
-								<td><?= $data['alamat']; ?></td>
-								<td>Rp.<?= number_format($data['saldo_keluar']); ?></td>
+								<td><?= $data['nama_acara']; ?></td>                              
+								<td><?= $data['tempat_acara']; ?></td>
+								<td>Rp.<?= number_format($data['jml_trx']); ?></td>
 								<td>
 									
 								<a href="lap_acara_pdf.php?id=<?php echo $data['id']; ?>&&nm=<?php echo $data['nm_acara'];?>"

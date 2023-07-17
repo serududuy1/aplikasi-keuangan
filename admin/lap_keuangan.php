@@ -43,8 +43,8 @@
                                         <input id="datepicker2" type="text" name="tgl_selesai"
                                              class="form-control ml-3 mb-2" placeholder="DD/MM/YYYY">
                                    </div>
-                                   <div class="col-md-4">
-                                        <select name="rt" class="form-select mb-3 mb-2">
+                                   <!-- <div class="col-md-4"> -->
+                                        <!-- <select name="rt" class="form-select mb-3 mb-2">
                                              <option value="">-- Pilih RT</option>
                                              <option value="1">001</option>
                                              <option value="2">002</option>
@@ -56,9 +56,9 @@
                                              <option value="8">008</option>
                                              <option value="9">009</option>
                                              <option value="10">010</option>
-                                        </select>
+                                        </select> -->
 
-                                        <select name="rw" class="form-select mb-2">
+                                        <!-- <select name="rw" class="form-select mb-2">
                                              <option value="">-- Pilih RW</option>
                                              <option value="1">001</option>
                                              <option value="2">002</option>
@@ -70,8 +70,8 @@
                                              <option value="8">008</option>
                                              <option value="9">009</option>
                                              <option value="10">010</option>
-                                        </select>
-                                   </div>
+                                        </select> -->
+                                   <!-- </div> -->
                                    <div class="col-md-4">
                                         <button type="submit" name="filter" class="btn btn-primary ml-3">View</button>
                                         <button type="reset" class="btn btn-danger ml-3"> Reset</button>
@@ -103,12 +103,16 @@
 						if(isset($_POST['filter'])){
 							$mulai = $_POST['tgl_mulai'];
 							$selesai = $_POST['tgl_selesai'];
-                                   print_r($_POST);
+                                   $newMulai  =  date( "Ymd" ,  strtotime ( $mulai ));  
+                                   $newSelesai  =  date( "Ymd" ,  strtotime ( $selesai ));  
+                                   // print_r($newMulai);
 							if ($mulai!=null || $selesai!=null ) {
                               $sql=mysqli_query($koneksi,"select * from trx inner join users on users.id_user = trx.id_user 
-                                   inner join acara on acara.id_trx = trx.id_trx and  tgl between '$mulai' and '$selesai'  order by tgl desc");
-                                   $sql2 = mysqli_query($koneksi, "select sum(jml_trx) as total from trx where keterangan='saldo_masuk' and  tgl between '$mulai' and '$selesai' ");
-                                   $sql3 = mysqli_query($koneksi, "select sum(jml_trx) as total from trx where keterangan='saldo_keluar' and  tgl between '$mulai' and '$selesai' ");
+                                   inner join acara on acara.id_trx = trx.id_trx and  tgl between '$newMulai' and '$newSelesai'  where trx.id_trx NOT IN (
+                                        SELECT id_trx from trx where keterangan = 'saldo_awal' 
+                                       )  order by tgl desc");
+                                   $sql2 = mysqli_query($koneksi, "select sum(jml_trx) as total from trx where keterangan='saldo_masuk' and  tgl between '$newMulai' and '$newSelesai' ");
+                                   $sql3 = mysqli_query($koneksi, "select sum(jml_trx) as total from trx where keterangan='saldo_keluar' and  tgl between '$newMulai' and '$newSelesai' ");
 							} else {
 								$sql=mysqli_query($koneksi,"select * from trx order by tgl desc");
 							}

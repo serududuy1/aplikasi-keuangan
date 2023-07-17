@@ -32,15 +32,30 @@ $cek=mysqli_num_rows($sql);
 			$bulan =  date('m', strtotime(date('Y-m-d')));
 			$sql2 = mysqli_query($koneksi,"SELECT * FROM saldo_awal where month(tgl)='$bulan' ORDER BY id_saldo_awal DESC LIMIT 1");
 			$rows = mysqli_num_rows($sql2);
+			$bul = $bulan-1;
 			if($rows<1){
-				$sql3 = mysqli_query($koneksi,"SELECT * FROM saldo_akhir where month(tgl)='$bulan' ORDER BY id_saldo_akhir DESC LIMIT 1");
+				$sql3 = mysqli_query($koneksi,"SELECT * FROM saldo_akhir where month(tgl)='$bul' ORDER BY id_saldo_akhir DESC LIMIT 1");
+				// print_r($sql3);
 				while ($data3 = mysqli_fetch_array($sql3)) {
 					$total = $data3['jml_saldo_akhir'];
 					$id = $data3['id_saldo_akhir'];
-					$sql3 = mysqli_query($koneksi, "insert into saldo_awal (id_saldo_akhir,jml_saldo_awal, tgl) values ('$id','$total','$tgls')");
-					if($sql3){
+					$sql4 = mysqli_query($koneksi, "insert into saldo_awal (id_saldo_akhir,jml_saldo_awal, tgl) values ('$id','$total','$tgls')");
+					// echo($total);
+					if($sql4){
 						// echo $sql3;
-						header('location:admin/index.php?url=dashboard');
+						// header('location:admin/index.php?url=dashboard');
+// 						echo $total;
+
+						$tgl=date('Y-m-d'); 
+							$sql88 = "insert into trx (id_user,jml_trx, keterangan, status_trx, tgl) values ('3','$total','saldo_awal','terima','$tgl')";
+							$koneksi->query($sql88);
+							$last_id = $koneksi->insert_id;
+							$sql5 = mysqli_query($koneksi," insert into acara (id_trx,nama_acara) values ('$last_id','saldo_awal') ");
+							$sql6 = mysqli_query($koneksi, "insert into saldo_akhir (id_trx, jml_trx,jml_saldo_akhir, tgl) values ('$last_id','$total','$total','$tgl')");
+							if ($sql6) {
+// echo $sql6;
+header('location:admin/index.php?url=dashboard');
+						}
 					}
 			   }
 			}else{
@@ -48,7 +63,7 @@ $cek=mysqli_num_rows($sql);
 				header('location:admin/index.php?url=dashboard');
 			}
 
-			header('location:admin/index.php?url=dashboard');
+			// header('location:admin/index.php?url=dashboard');
 
 
 // print_r($_SESSION);
