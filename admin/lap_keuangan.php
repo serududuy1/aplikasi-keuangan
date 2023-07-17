@@ -36,12 +36,12 @@
                          <form method="POST" class="form-inline">
                               <div class="row">
                                    <div class="col-md-2">
-                                        <input id="datepicker" type="text" name="tgl_mulai" class="form-control mb-2"
+                                        <input id="" type="date" name="tgl_mulai" class="form-control mb-2"
                                              placeholder="DD/MM/YYYY">
                                    </div>
                                    <div class="col-md-2">
-                                        <input id="datepicker2" type="text" name="tgl_selesai"
-                                             class="form-control ml-3 mb-2" placeholder="DD/MM/YYYY">
+                                        <input id="" type="date" name="tgl_selesai"
+                                             class="form-control ml-3 mb-2" placeholder="YYYY/MM/DD">
                                    </div>
                                    <!-- <div class="col-md-4"> -->
                                         <!-- <select name="rt" class="form-select mb-3 mb-2">
@@ -117,10 +117,12 @@
 								$sql=mysqli_query($koneksi,"select * from trx order by tgl desc");
 							}
 						} else {
-							$sql=mysqli_query($koneksi,"select * from trx inner join users on users.id_user = trx.id_user 
-                                   inner join acara on acara.id_trx = trx.id_trx and month(trx.tgl)='$bulan' order by tgl desc");
-                                   $sql2 = mysqli_query($koneksi, "select sum(jml_trx) as total from trx where keterangan='saldo_masuk' and month(trx.tgl)='$bulan'");
-                                   $sql3 = mysqli_query($koneksi, "select sum(jml_trx) as total from trx where keterangan='saldo_keluar' and month(trx.tgl)='$bulan'");
+							// $sql=mysqli_query($koneksi,"select * from trx inner join users on users.id_user = trx.id_user 
+                                   // inner join acara on acara.id_trx = trx.id_trx and month(trx.tgl)='$bulan' where trx.id_trx NOT IN (
+                                   //      SELECT id_trx from trx where keterangan = 'saldo_awal' 
+                                   //     )  order by tgl desc");
+                                   // $sql2 = mysqli_query($koneksi, "select sum(jml_trx) as total from trx where keterangan='saldo_masuk' and month(trx.tgl)='$bulan'");
+                                   // $sql3 = mysqli_query($koneksi, "select sum(jml_trx) as total from trx where keterangan='saldo_keluar' and month(trx.tgl)='$bulan'");
 						} 
 						$no=1;
 						$total = 0;
@@ -176,7 +178,7 @@
 
                <div class="row">
                     <div class="col-lg-6">
-                         <a href="lap_keuangan_pdf2.php?tgl_mulai=<?php echo $_POST['tgl_mulai']; ?>&&tgl_selesai=<?php echo $_POST['tgl_selesai']; ?>&&rt=<?php echo $_POST['rt']; ?>&&rw=<?php echo $_POST['rw']; ?>"
+                         <a href="lap_keuangan_pdf2.php?tgl_mulai=<?php echo $_POST['tgl_mulai']; ?>&&tgl_selesai=<?php echo $_POST['tgl_selesai']; ?>"
                               target="_blank" class="btn btn-primary">
                               <i class="bi bi-file-earmark-pdf"></i>
                               <span class="text">Export Pdf</span>

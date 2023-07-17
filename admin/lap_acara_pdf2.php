@@ -24,8 +24,8 @@ $pdf->ln(1);
 $pdf->cell(190,0.6,'','0','1','C',true);
 $pdf->ln(5);
 
-$tgl_mulai = $_GET['tgl_mulai'];
-$tgl_selesai = $_GET['tgl_selesai'];
+$tgl_mulai =date( "Ymd" ,  strtotime (  $_GET['tgl_mulai'] ));  
+$tgl_selesai =  date( "Ymd" ,  strtotime ( $_GET['tgl_selesai'] ));   
 $no=1;
 
 	$pdf->SetFont('Arial','',11);
@@ -55,14 +55,17 @@ $pdf->Cell(25,10,'Uang',1,0,'C');
 
 	$pdf->Cell(10,10,'',0,1);
 	$pdf->SetFont('Arial','',10);
-$sql=mysqli_query($koneksi," select * from acara where  tgl between '$tgl_mulai' and '$tgl_selesai'");
+$sql=mysqli_query($koneksi,"select * from trx inner join acara on acara.id_trx = trx.id_trx  inner join users on users.id_user = trx.id_user where trx.id_trx NOT IN (
+	SELECT id_trx from trx where keterangan = 'saldo_awal' 
+   ) and trx.status_trx='terima' and trx.keterangan='saldo_keluar'
+and trx.tgl between '$tgl_mulai' and '$tgl_selesai'");
 while ($data=mysqli_fetch_array($sql)) 
 {
 	$pdf->Cell(8,10, $no++,1,0,'C');
-	$pdf->Cell(28,10, $data['nm_acara'],1,0,'C');  
+	$pdf->Cell(28,10, $data['nama_acara'],1,0,'C');  
 	$pdf->Cell(20,10, $data['tgl'],1,0,'C');
-	$pdf->Cell(110,10, $data['alamat'],1,0,'L');
-	$pdf->Cell(25,10, 'Rp.'.number_format($data['saldo_keluar']).'',1,1,'C');	
+	$pdf->Cell(110,10, $data['tempat_acara'],1,0,'L');
+	$pdf->Cell(25,10, 'Rp.'.number_format($data['jml_trx']).'',1,1,'C');	
 
 }
 

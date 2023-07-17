@@ -23,11 +23,11 @@ $pdf->ln(1);
 //garis hr
 $pdf->cell(190,0.6,'','0','1','C',true);
 $pdf->ln(7);
-
-$tgl_mulai = $_GET['tgl_mulai'];
-$tgl_selesai = $_GET['tgl_selesai'];
-$rt = $_GET['rt'];
-$rw = $_GET['rw'];
+       
+$tgl_mulai =date( "Ymd" ,  strtotime (  $_GET['tgl_mulai'] ));  
+$tgl_selesai =$newSelesai  =  date( "Ymd" ,  strtotime ( $_GET['tgl_selesai'] ));   
+// $rt = $_GET['rt'];
+// $rw = $_GET['rw'];
 $no=1;
 
 $pdf->SetFont('Arial','',11);
@@ -46,18 +46,6 @@ $pdf->SetFont('Arial','',11);
 $pdf->Cell(73,7,''.$_GET['tgl_mulai'].'  s/d  '.$_GET['tgl_selesai'].'',0,1,'L');
 
 
-$sql=mysqli_query($koneksi,"select * from keuangan where status='terima'
-	and rt='$rt' and rw='$rw' and tgl between '$tgl_mulai' and DATE_ADD('$tgl_selesai', INTERVAL 1 DAY) limit 1 ");
-while ($data=mysqli_fetch_array($sql)) 
-{
-	$pdf->SetFont('Arial','B',11);    	
-	$pdf->cell (35,7,'Alamat',0,0,'L');
-	$pdf->cell (3,7,':',0,0,'L');
-	$pdf->SetFont('Arial','',11);    	
-	$pdf->cell (50,7,$data['alamat'],0,1,'L');
-}	
-
-$pdf->ln(3);
 
 $pdf->Cell(10,7,'',0,1);
 $pdf->SetFont('Arial','B',11);
@@ -72,16 +60,18 @@ $pdf->Cell(35,7,'Uang',1,0,'C');
 $pdf->Cell(10,7,'',0,1);
 $pdf->SetFont('Arial','',10);
 
-$sql=mysqli_query($koneksi,"select * from keuangan where status='terima'
-	and rt='$rt' and rw='$rw' and tgl between '$tgl_mulai' and '$tgl_selesai'");
+$sql=mysqli_query($koneksi,"select * from trx inner join acara on acara.id_trx = trx.id_trx  inner join users on users.id_user = trx.id_user where trx.id_trx NOT IN (
+	SELECT id_trx from trx where keterangan = 'saldo_awal' 
+   ) and trx.status_trx='terima'
+and trx.tgl between '$tgl_mulai' and '$tgl_selesai'");
 while ($data=mysqli_fetch_array($sql)) 
 {
 	$pdf->Cell(10,7, $no++,1,0,'C');
 	$pdf->Cell(40,7, $data['nama'],1,0,'C');  
 	$pdf->Cell(40,7, $data['tgl'],1,0,'C');
-	$pdf->Cell(40,7, $data['typeuang'],1,0,'C');
-	$pdf->Cell(20,7, $data['status'],1,0,'C');
-	$pdf->Cell(35,7, 'Rp.'.number_format($data['saldo_akhir']).'',1,1,'C');
+	$pdf->Cell(40,7, $data['keterangan'],1,0,'C');
+	$pdf->Cell(20,7, $data['status_trx'],1,0,'C');
+	$pdf->Cell(35,7, 'Rp.'.number_format($data['jml_trx']).'',1,1,'C');
 
 }
 

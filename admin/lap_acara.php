@@ -60,28 +60,47 @@
 						<?php
 						require '../config/config.php';
 
+						$bulan =  date('m', strtotime(date('Y-m-d')));
 						if(isset($_POST['filter'])){
 							$mulai = $_POST['tgl_mulai'];
 							$selesai = $_POST['tgl_selesai'];
 							
+							$newMulai  =  date( "Ymd" ,  strtotime ( $mulai ));  
+							$newSelesai  =  date( "Ymd" ,  strtotime ( $selesai ));  
 
-							$bulan =  date('m', strtotime(date('Y-m-d')));
 							if ($mulai!=null || $selesai!=null ) {
 								$sql=mysqli_query($koneksi,"select * from trx inner join users on users.id_user = trx.id_user 
-								inner join acara on acara.id_trx = trx.id_trx and  tgl between '$mulai' and '$selesai'  order by tgl desc"); 
+								inner join acara on acara.id_trx = trx.id_trx and  tgl between '$newMulai' and '$newSelesai'  where trx.id_trx NOT IN (
+									SELECT id_trx from trx where keterangan = 'saldo_awal' 
+								   ) and trx.id_trx NOT IN (
+									SELECT id_trx from trx where keterangan = 'saldo_masuk'
+								   )   order by tgl desc"); 
+								// $sql2 = mysqli_query($koneksi, "select sum(jml_trx) as total from trx inner join acara on acara.id_trx = trx.id_trx and keterangan='saldo_masuk' and  tgl between '$newMulai' and '$newSelesai' ");
+                                   $sql3 = mysqli_query($koneksi, "select sum(jml_trx) as total from trx inner join acara on acara.id_trx = trx.id_trx and keterangan='saldo_keluar' and  tgl between '$newMulai' and '$newSelesai' ");
 							} else {
 								$sql=mysqli_query($koneksi,"select * from trx inner join users on users.id_user = trx.id_user 
 								inner join acara on acara.id_trx = trx.id_trx and month(trx.tgl)='$bulan' order by tgl desc");
 							}
 						} else {
-							$sql=mysqli_query($koneksi,"select *, sum(jml_trx) as toll from trx inner join acara on acara.id_trx = trx.id_trx and keterangan='saldo_keluar' order by tgl desc");
-
+							$sql=mysqli_query($koneksi,"select * from trx inner join users on users.id_user = trx.id_user 
+							inner join acara on acara.id_trx = trx.id_trx   where trx.id_trx NOT IN (
+								SELECT id_trx from trx where keterangan = 'saldo_awal' 
+							   ) and trx.id_trx NOT IN (
+								SELECT id_trx from trx where keterangan = 'saldo_masuk'
+							   )  order by tgl desc");
+							// $sql2 = mysqli_query($koneksi, "select sum(jml_trx) as total from trx inner join acara on acara.id_trx = trx.id_trx and keterangan='saldo_masuk' and month(trx.tgl)='$bulan'");
+							$sql3 = mysqli_query($koneksi, "select sum(jml_trx) as total from trx inner join acara on acara.id_trx = trx.id_trx and keterangan='saldo_keluar' and month(trx.tgl)='$bulan'");
 						} 
 						$no=1;
 						$total = 0;
-						while ($data=mysqli_fetch_array($sql)) {
-							$total = $data['toll'];               
-							?>
+						while ($data=mysqli_fetch_array($sql)) { 
+							// while ($datas=mysqli_fetch_array($sql2)) { 
+								 while ($data2=mysqli_fetch_array($sql3)) { 
+								 
+									  $total = $data2['total'];              
+								 }          
+							// }
+					 ?>
 
 
 							<tr>
@@ -101,7 +120,9 @@
 
 								</td>                                  
 							</tr>
-						<?php } ?> 
+						<?php 
+					}
+					 ?> 
 
 					</tbody>
 
