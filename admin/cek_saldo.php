@@ -28,8 +28,8 @@
 
 
 
-                                   <div class="col-sm-4 ">
-                                        <div class="card info-card sales-card bg-warning">
+                                   <div class="col-xxl-6 col-md-6">
+                                        <div class="card info-card sales-card bg-warning p-5">
                                              <div class="card-body">
                                                   <h5 class="card-title text-white">Saldo Awal<span></span></h5>
                                                   <?php
@@ -80,9 +80,9 @@
                                    </div>
 
 
-                                   <div class="col-xxl-4 col-md-4">
-                                        <div class="card info-card sales-card bg-info">
-                                             <div class="card-body">
+                                   <div class="col-xxl-6 col-md-6">
+                                        <div class="card info-card sales-card bg-info p-5   ">
+                                           <div class="card-body">
                                                   <h5 class="card-title text-white">Saldo Masuk<span></span></h5>
                                                   <?php
 										require '../config/config.php';
@@ -113,8 +113,8 @@
                                    </div>
 
 
-                                   <div class="col-xxl-4 col-md-4">
-                                        <div class="card info-card sales-card bg-primary">
+                                   <div class="col-xxl-6 col-md-6">
+                                        <div class="card info-card sales-card bg-primary p-5 ">
                                              <div class="card-body ">
                                                   <h5 class="card-title text-white">Saldo Akhir<span></span></h5>
                                                   <?php
@@ -154,8 +154,8 @@
                                    </div>
 
 
-                                   <div class="col-xxl-4 col-md-4">
-                                        <div class="card info-card sales-card bg-success">
+                                   <div class="col-xxl-6 col-md-6">
+                                        <div class="card info-card sales-card bg-success p-5">
                                              <div class="card-body">
                                                   <h5 class="card-title text-white">Saldo Keluar <span></span></h5>
                                                   <?php
@@ -213,22 +213,7 @@
                                         </div>
                                    </div>
 
-                                   <p>asdas</p>
-                                   <?php
-							require '../config/config.php';                    
-                                   $bulan =  date('m', strtotime(date('Y-m-d')));
-
-										$sql = mysqli_query($koneksi,"select jml_trx as jmlah from trx where month(tgl)='bulan'");
-								
-								$rows = mysqli_num_rows($sql);
-								// $kocak = $data['jmlah'];
-									if($rows<=1){
-										echo "gaada";
-									}else{
-										echo "ada";
-									}
-								// }
-							?>
+                                  
                               </div>
                          </div>
                     </div>

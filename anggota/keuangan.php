@@ -107,7 +107,7 @@
         <?php
         require '../config/config.php';
         $sql = mysqli_query($koneksi, 
-          "select * from trx inner join users on users.id_user = trx.id_user where nama='$_SESSION[nama]' order by tgl desc");
+          "select * from trx inner join users on users.id_user = trx.id_user where users.nama='$_SESSION[nama]' order by tgl desc");
         while ($data = mysqli_fetch_array($sql)) {
           ?>                       
           <tr>
