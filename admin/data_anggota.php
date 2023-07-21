@@ -207,14 +207,14 @@
 
 
 
-<a href="?url=edit&id=<?php echo $data['id']; ?>" class="btn btn-info btn-icon-split">
+<a href="?url=edit&id=<?php echo $data['id_user']; ?>" class="btn btn-info btn-icon-split">
  <span class="icon text-white">
   <i class="bi bi-pencil-square"></i>
 </span>
 </a>     
 
 
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#MyValidasi<?= $data['id']; ?>" >
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#MyValidasi<?= $data['id_user']; ?>" >
      <span class="icon text-white">
       <i class="bi bi-check-square"></i>
     </span> 
@@ -222,7 +222,7 @@
 
 
 
-<a href="del.php?id=<?php echo $data['id']; ?>" class="btn btn-danger btn-icon-split" onclick="return confirm('Yakin Hapus Data Anggota ?')">
+<a href="del.php?id=<?php echo $data['id_user']; ?>" class="btn btn-danger btn-icon-split" onclick="return confirm('Yakin Hapus Data Anggota ?')">
  <span class="icon text-white">
   <i class="bi bi-trash-fill"></i>
 </span>
@@ -233,7 +233,7 @@
 
 
 <!-- edit Modal -->
-<div class="modal fade" id="MyEdit<?= $data['id']; ?>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<div class="modal fade" id="MyEdit<?= $data['id_user']; ?>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-scrollable modal-lg">
    <div class="modal-content">
     <div class="modal-header">

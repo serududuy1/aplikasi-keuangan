@@ -36,7 +36,7 @@
 
   <?php
   require '../config/config.php';
-  $sql = mysqli_query($koneksi,"select * from users where id='$_GET[id]' ");
+  $sql = mysqli_query($koneksi,"select * from users where id_user='$_GET[id]' ");
   while ($data = mysqli_fetch_array($sql)) {
    ?>
 
