@@ -483,8 +483,8 @@ if($rows<1){
 }
                                   ?>
                                                                       <form method="POST">
-                                        <input type="text" name='total' value='<?=$total?>'>
-                                        <input type="text" name="tgl" value='<?= $data['tgl']; ?>'>
+                                        <input type="hidden" name='total' value='<?=$total?>'>
+                                        <input type="hidden" name="tgl" value='<?= $data['tgl']; ?>'>
                                                                            <input type="hidden" name="id"
                                                                                 class="form-control"
                                                                                 value="<?= $data['id_trx']; ?>">
@@ -507,7 +507,6 @@ if($rows<1){
                                              <div class="modal-footer">
                                                   <button type="button" class="btn btn-secondary"
                                                        data-bs-dismiss="modal">Close</button>
-                                                  <button type="reset" class="btn btn-danger">Reset</button>
                                                   <button type="submit" name="validasi_keuangan"
                                                        class="btn btn-primary">Simpan</button>
                                              </div>

@@ -31,13 +31,14 @@
                 <?php  
                 require '../config/config.php';
                 $nama = $_SESSION['nama'];
-                $sql = mysqli_query($koneksi,"select count(nama) from keuangan where nama='$nama' and  status='kirim'  ");
+                $sql = mysqli_query($koneksi,"select *,count(nama) as nm
+                from trx inner join users on users.id_user = trx.id_user where nama='$nama' and  status_trx='kirim'");
                 while ($data = mysqli_fetch_array($sql)) 
                 {
                   ?>                 
                   <div class="card-icon rounded-circle d-flex align-items-center justify-content-center"> <i class="bi bi-upload"></i></div>               
                   <div class="ps-3">              
-                    <h6><?= $data['count(nama)']; ?></h6>                
+                    <h6><?= $data['nm']; ?></h6>                
                     <span class="text-danger small pt-1 fw-bold">Total Keuangan Terkirim</span> <span class="text-muted small pt-2 ps-1"></span>
                   </div>
                 <?php } ?>          
@@ -57,15 +58,15 @@
               <?php  
               require '../config/config.php';
               $nama = $_SESSION['nama'];
-              $sql = mysqli_query($koneksi,"select count(nama) 
-                  from keuangan where nama='$nama' and  status='terima'");
+              $sql = mysqli_query($koneksi,"select *,count(nama) as nm
+                  from trx inner join users on users.id_user = trx.id_user where nama='$nama' and  status_trx='terima'");
               while ($data = mysqli_fetch_array($sql)) 
               {
                 ?>
                 <div class="d-flex align-items-center">                 
                   <div class="card-icon rounded-circle d-flex align-items-center justify-content-center"> <i class="bi bi-download"></i></div>               
                   <div class="ps-3">              
-                    <h6><?= $data['count(nama)']; ?></h6>                
+                    <h6><?= $data['nm']; ?></h6>                
                     <span class="text-danger small pt-1 fw-bold">Total Keuangan Diterima Oleh Ketua</span> <span class="text-muted small pt-2 ps-1"></span>
                   </div>         
                 </div>                 

@@ -40,7 +40,7 @@
                         <?php
                         require '../config/config.php';
                         $no = 1;
-                        $sql = mysqli_query($koneksi,"select * from users where id='$_SESSION[id]' ");
+                        $sql = mysqli_query($koneksi,"select * from users where id_user='$_SESSION[id]' ");
                         while ($data = mysqli_fetch_array($sql)) {
                            ?>                   
                            <tr>

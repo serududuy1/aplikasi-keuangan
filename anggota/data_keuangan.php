@@ -43,25 +43,26 @@
 						require '../config/config.php';
 						$no = 1;
 						$total = 0;
-						$sql = mysqli_query($koneksi,"select * from keuangan where nama='$_SESSION[nama]' order by tgl DESC ");
+						print_r($_SESSION['id']);
+						$sql = mysqli_query($koneksi,"select * from trx inner join users on users.id_user = trx.id_user inner join acara on acara.id_trx = trx.id_trx where trx.id_user='$_SESSION[id]' order by tgl DESC ");
 						while ($data = mysqli_fetch_array($sql)) {
-							$total += $data['saldo_akhir'];   
+							$total += $data['jml_trx'];   
 							?>                   
 							<tr>
 								<td><?= $no++; ?></td>
 								<td><?= $data['nama']; ?></td>
-								<td><?= $data['typeuang']; ?></td>                              
+								<td><?= $data['nama_acara']; ?></td>                              
 								<td><?= $data['tgl']; ?></td>
-								<td>Rp.<?= number_format($data['saldo_akhir']); ?></td>
+								<td>Rp.<?= number_format($data['jml_trx']); ?></td>
 
 								<td>
 									<?php
-									if($data['status'] == 'kirim'){ ?>
-										<span class="badge bg-warning "><?= $data['status']; ?></span>
-									<?php } elseif ($data['status'] == 'terima') { ?>
-										<span class="badge bg-primary "><?= $data['status']; ?></span>
-									<?php } elseif ($data['status'] == 'tidak terima') { ?>
-										<span class="badge bg-danger "><?= $data['status']; ?></span>
+									if($data['status_trx'] == 'kirim'){ ?>
+										<span class="badge bg-warning "><?= $data['status_trx']; ?></span>
+									<?php } elseif ($data['status_trx'] == 'terima') { ?>
+										<span class="badge bg-primary "><?= $data['status_trx']; ?></span>
+									<?php } elseif ($data['status_trx'] == 'tidak terima') { ?>
+										<span class="badge bg-danger "><?= $data['status_trx']; ?></span>
 									<?php }?>
 									</td>                                  
 									<td>

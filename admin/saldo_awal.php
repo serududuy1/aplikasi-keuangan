@@ -11,18 +11,18 @@
 
      <div class="container">
           <div class="pagetitle">
-               <h1 class="mb-1">Anggota</h1>
+               <h1 class="mb-1">Saldo Awal</h1>
                <nav>
                     <ol class="breadcrumb">
                          <li class="breadcrumb-item"><a href="?url=dashboard">Dashboard</a></li>
-                         <li class="breadcrumb-item active">Data Anggota</li>
+                         <li class="breadcrumb-item active">Data Saldo Awal</li>
                     </ol>
                </nav>
           </div><!-- End Page Title -->
           <div class="card">
                <div class="card-body">
                     <div class="card-header">
-                         <h3>Form Data Anggota
+                         <h3>Form Data Saldo Awal
                               <p>
                                    <?php
 //                                    $hari_ini = date("d-m-Y");
@@ -42,7 +42,7 @@ $tgl_kemarin    =date('Y-m-d', strtotime("-1 month", strtotime(date("Y-m-d"))));
 
 //Bulan kemarin
 // $bulan_kemarin    =date('m', strtotime("-1 m", strtotime(date("m"))));
-echo date('m', strtotime(date('Y-m-d') . '- 1 month'));
+// echo "Tanggal =".date('Y-m', strtotime(date('Y-m-d') . '- 1 month'));
 
 // echo $bulan_kemarin;
 

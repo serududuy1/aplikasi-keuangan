@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 12 Jul 2023 pada 03.59
+-- Waktu pembuatan: 21 Jul 2023 pada 07.00
 -- Versi server: 10.4.27-MariaDB
 -- Versi PHP: 7.4.33
 
@@ -41,7 +41,17 @@ CREATE TABLE `acara` (
 INSERT INTO `acara` (`id_acara`, `id_trx`, `nama_acara`, `tempat_acara`) VALUES
 (36, 73, 'uang kas', ''),
 (37, 74, 'infak', ''),
-(38, 75, 'uang kas', '');
+(44, 82, 'saldo_awal', ''),
+(45, 83, 'saldo_awal', ''),
+(46, 84, 'acara', ''),
+(47, 85, 'tamasya', 'asdlakldjalsjdlasasd'),
+(48, 86, 'jalan jalan', 'asdihjiopgfefe'),
+(49, 87, 'uang kas', ''),
+(50, 88, 'uang kas', ''),
+(51, 89, 'dll', ''),
+(52, 90, 'uang kas', ''),
+(53, 91, 'uang kas', ''),
+(54, 92, 'infak', '');
 
 -- --------------------------------------------------------
 
@@ -64,7 +74,13 @@ CREATE TABLE `saldo_akhir` (
 INSERT INTO `saldo_akhir` (`id_saldo_akhir`, `id_trx`, `jml_trx`, `jml_saldo_akhir`, `tgl`) VALUES
 (34, 73, '100000', '100000', '2023-06-12'),
 (35, 74, '900000', '1000000', '2023-06-12'),
-(36, 75, '1500000', '1500000', '2023-07-12');
+(39, 82, '1000000', '1000000', '2023-07-17'),
+(40, 83, '1000000', '1000000', '2023-07-17'),
+(41, 84, '900000', '1900000', '2023-07-17'),
+(42, 85, '100000', '1800000', '2023-07-19'),
+(43, 86, '300000', '1500000', '2023-07-31'),
+(44, 87, '500000', '2000000', '2023-07-21'),
+(45, 92, '5000', '2005000', '2023-07-21');
 
 -- --------------------------------------------------------
 
@@ -84,7 +100,7 @@ CREATE TABLE `saldo_awal` (
 --
 
 INSERT INTO `saldo_awal` (`id_saldo_awal`, `id_saldo_akhir`, `jml_saldo_awal`, `tgl`) VALUES
-(7, 36, '1500000', '2023-07-12');
+(18, 35, '1000000', '2023-07-17');
 
 -- --------------------------------------------------------
 
@@ -108,7 +124,17 @@ CREATE TABLE `trx` (
 INSERT INTO `trx` (`id_trx`, `id_user`, `jml_trx`, `keterangan`, `status_trx`, `tgl`) VALUES
 (73, 3, '100000', 'saldo_masuk', 'terima', '2023-06-12'),
 (74, 5, '900000', 'saldo_masuk', 'terima', '2023-06-12'),
-(75, 3, '1500000', 'saldo_masuk', 'terima', '2023-07-12');
+(82, 3, '1000000', 'saldo_awal', 'terima', '2023-07-17'),
+(83, 3, '1000000', 'saldo_awal', 'terima', '2023-07-17'),
+(84, 3, '900000', 'saldo_masuk', 'terima', '2023-07-17'),
+(85, 3, '100000', 'saldo_keluar', 'terima', '2023-07-19'),
+(86, 3, '300000', 'saldo_keluar', 'terima', '2023-07-31'),
+(87, 5, '500000', 'saldo_masuk', 'terima', '2023-07-21'),
+(88, 5, '50000', 'saldo_masuk', 'kirim', '2023-07-21'),
+(89, 5, '200000', 'saldo_masuk', 'kirim', '2023-07-21'),
+(90, 5, '100000', 'saldo_masuk', 'kirim', '2023-07-21'),
+(91, 5, '300000', 'saldo_masuk', 'kirim', '2023-07-21'),
+(92, 5, '5000', 'saldo_masuk', 'terima', '2023-07-21');
 
 -- --------------------------------------------------------
 
@@ -190,25 +216,25 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT untuk tabel `acara`
 --
 ALTER TABLE `acara`
-  MODIFY `id_acara` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
+  MODIFY `id_acara` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=55;
 
 --
 -- AUTO_INCREMENT untuk tabel `saldo_akhir`
 --
 ALTER TABLE `saldo_akhir`
-  MODIFY `id_saldo_akhir` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
+  MODIFY `id_saldo_akhir` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
 
 --
 -- AUTO_INCREMENT untuk tabel `saldo_awal`
 --
 ALTER TABLE `saldo_awal`
-  MODIFY `id_saldo_awal` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id_saldo_awal` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT untuk tabel `trx`
 --
 ALTER TABLE `trx`
-  MODIFY `id_trx` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=76;
+  MODIFY `id_trx` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=93;
 
 --
 -- AUTO_INCREMENT untuk tabel `users`

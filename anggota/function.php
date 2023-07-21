@@ -3,29 +3,28 @@ require '../config/config.php';
 
 if(isset($_POST['kauangan'])) {
     date_default_timezone_set('Asia/Jakarta'); 
-    $tgl=date('d-m-Y'); 
+    $tgl=date('Y-m-d'); 
     $nama = $_POST['nama'];
-    $rt = $_POST['rt'];
-    $rw = $_POST['rw'];
-    $alamat = $_POST['alamat'];
+    $id = $_POST['id'];
     $typeuang = $_POST['typeuang'];
     $saldo_akhir = $_POST['saldo_akhir'];
     $sts = 'kirim';
     $ket = $_POST['ket'];
+    $bulan =  date('m', strtotime(date('Y-m-d')));
 
-    $sql = mysqli_query($koneksi," insert into keuangan 
-        (nama,rt,rw,alamat,tgl,saldo_akhir,status,typeuang,ket) values 
-        ('$nama','$rt','$rw','$alamat','$tgl','$saldo_akhir','$sts','$typeuang','$ket') ");
-
-    if ($sql) {
-        ?>
+    $sql = "insert into trx (id_user,jml_trx, keterangan, status_trx, tgl) values ('$id','$saldo_akhir','saldo_masuk','kirim','$tgl')";
+        $koneksi->query($sql);
+        $last_id = $koneksi->insert_id;
+        $sql2 = mysqli_query($koneksi," insert into acara (id_trx,nama_acara) values ('$last_id','$typeuang') ");
+        
+        if ($sql2) {
+            ?>
         <script type="text/javascript">
             alert('Data Berhasil Di Kirim');
             window.location = "index.php?url=keuangan";
-        </script>
+            </script>
     <?php }
 };
-
 
 
 if(isset($_POST['profile'])) {

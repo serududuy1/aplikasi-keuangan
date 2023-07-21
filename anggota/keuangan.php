@@ -32,16 +32,7 @@
       <label  class="col-sm-3 col-form-label"><b>Nama </b></label>
       <div class="col-sm-8">
         <input type="text" name="nama" class="form-control" value="<?= $_SESSION['nama']; ?>" readonly>
-      </div>
-    </div>
-
-    <input type="hidden" name="rt" class="form-control" value="<?= $_SESSION['rt']; ?>" readonly>
-    <input type="hidden" name="rw" class="form-control" value="<?= $_SESSION['rw']; ?>" readonly>
-
-    <div class="mb-2 mt-3 row">
-      <label  class="col-sm-3 col-form-label"><b>Alamat </b></label>
-      <div class="col-sm-8">
-        <textarea type="text" name="alamat" class="form-control" readonly><?= $_SESSION['alamat']; ?></textarea>
+        <input type="hidden" name="id" value="<?= $_SESSION['id']; ?>">
       </div>
     </div>
 
@@ -116,20 +107,20 @@
         <?php
         require '../config/config.php';
         $sql = mysqli_query($koneksi, 
-          "select * from keuangan where nama='$_SESSION[nama]' order by tgl desc");
+          "select * from trx inner join users on users.id_user = trx.id_user where nama='$_SESSION[nama]' order by tgl desc");
         while ($data = mysqli_fetch_array($sql)) {
           ?>                       
           <tr>
             <td style="font-size: 14px"><?= $data['tgl']; ?></td>
-            <td style="font-size: 14px"><?= $data['saldo_akhir']; ?></td>
+            <td style="font-size: 14px"><?= $data['jml_trx']; ?></td>
             <td>
               <?php
-              if($data['status'] == 'kirim'){ ?>
-                <a href="?url=data_keuangan"><span class="badge bg-warning "><?= $data['status']; ?></span></a>
-              <?php } elseif ($data['status'] == 'terima') { ?>
-                <a href="?url=data_keuangan"><span  class="badge bg-primary "><?= $data['status']; ?></span></a>
-              <?php } elseif ($data['status'] == 'tidak terima') { ?>
-                <a href="?url=data_keuangan"><span style="font-size: 11px" class="badge bg-danger "><?= $data['status']; ?></span></a>
+              if($data['status_trx'] == 'kirim'){ ?>
+                <a href="?url=data_keuangan"><span class="badge bg-warning "><?= $data['status_trx']; ?></span></a>
+              <?php } elseif ($data['status_trx'] == 'terima') { ?>
+                <a href="?url=data_keuangan"><span  class="badge bg-primary "><?= $data['status_trx']; ?></span></a>
+              <?php } elseif ($data['status_trx'] == 'tidak terima') { ?>
+                <a href="?url=data_keuangan"><span style="font-size: 11px" class="badge bg-danger "><?= $data['status_trx']; ?></span></a>
               <?php }?>
                 
               </td>
