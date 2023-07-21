@@ -188,7 +188,7 @@
                                              </span>
                                         </button>
 
-                                        <a href="del2.php?id=<?php echo $data['id']; ?>"
+                                        <a href="del2.php?id=<?php echo $data['id_trx']; ?>"
                                              class="btn btn-danger btn-icon-split"
                                              onclick="return confirm('Yakin Hapus Data ?')">
                                              <span class="icon text-white">

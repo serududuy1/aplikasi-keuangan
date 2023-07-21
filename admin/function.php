@@ -157,7 +157,7 @@ if(isset($_POST['validasi_anggota'])) {
     $recid = '1';
     $status = $_POST['status'];
 
-    $sql = mysqli_query($koneksi," update users set recid='$recid', status='$status ' where id='$id' ");
+    $sql = mysqli_query($koneksi," update users set recid='$recid', status='$status ' where id_user='$id' ");
 
     if ($sql) {
         ?>

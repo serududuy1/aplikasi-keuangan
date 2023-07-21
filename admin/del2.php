@@ -3,7 +3,7 @@ require '../config/config.php';
 
 $id=$_GET['id'];
 
-$sql=mysqli_query($koneksi,"delete from keuangan where id='$id' ");
+$sql=mysqli_query($koneksi,"delete from trx where id_trx='$id' ");
 
 if ($sql) 
 {

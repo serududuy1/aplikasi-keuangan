@@ -422,7 +422,7 @@
 <!--end edit Modal -->
 
 <!-- Modal validasi -->
-<div class="modal fade" id="MyValidasi<?= $data['id']; ?>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<div class="modal fade" id="MyValidasi<?= $data['id_user']; ?>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-scrollable modal-lg">
     <div class="modal-content">
       <div class="modal-header">
@@ -516,7 +516,7 @@
      <div class="p-3">
 
       <form method="POST">
-       <input type="hidden" name="id" class="form-control" value="<?= $data['id']; ?>">    
+       <input type="hidden" name="id" class="form-control" value="<?= $data['id_user']; ?>">    
        <select class="form-select form-select-sm" name="status" required>
          <option value="" selected>-- Pilih Validasi Anggota --</option>
          <option value="aktif">Aktif</option>

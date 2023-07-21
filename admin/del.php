@@ -3,7 +3,7 @@ require '../config/config.php';
 
 $id=$_GET['id'];
 
-$sql=mysqli_query($koneksi,"delete from users where id='$id' ");
+$sql=mysqli_query($koneksi,"delete from users where id_user='$id' ");
 
 if ($sql) 
 {
