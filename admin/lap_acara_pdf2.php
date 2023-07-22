@@ -59,6 +59,9 @@ $sql=mysqli_query($koneksi,"select * from trx inner join acara on acara.id_trx =
 	SELECT id_trx from trx where keterangan = 'saldo_awal' 
    ) and trx.status_trx='terima' and trx.keterangan='saldo_keluar'
 and trx.tgl between '$tgl_mulai' and '$tgl_selesai'");
+$sql2 = mysqli_query($koneksi, "select sum(jml_trx) as total from trx where keterangan='saldo_masuk' and  tgl between '$tgl_mulai' and '$tgl_selesai' ");
+$sql3 = mysqli_query($koneksi, "select sum(jml_trx) as total from trx where keterangan='saldo_keluar' and  tgl between '$tgl_mulai' and '$tgl_selesai' ");
+
 while ($data=mysqli_fetch_array($sql)) 
 {
 	$pdf->Cell(8,10, $no++,1,0,'C');
@@ -69,6 +72,20 @@ while ($data=mysqli_fetch_array($sql))
 
 }
 
+$pdf->Cell(10,10,'',0,1);
+while ($datas=mysqli_fetch_array($sql2)) { 
+	while ($data2=mysqli_fetch_array($sql3)) { 
+	
+		 $total = $datas['total']-$data2['total'];              
+		 
+		 $pdf->Cell(40,7,'Total Saldo Masuk',1,0,'C');
+		 $pdf->Cell(151,7,'Rp.'.number_format($datas['total']).'',1,1,'C');
+		 $pdf->Cell(40,7,'Total Saldo Keluar',1,0,'C');
+		 $pdf->Cell(151,7,'Rp.'.number_format($data2['total']).'',1,1,'C');
+	}          
+}
+$pdf->Cell(40,7,'Saldo Akhir',1,0,'C');
+$pdf->Cell(151,7,'Rp.'.number_format($total).'',1,1,'C');
 $pdf->Output();
 
 ?>
