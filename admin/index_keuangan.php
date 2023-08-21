@@ -152,10 +152,16 @@
                               include '../config/getbln.php';
 						$no = 1;
                               $bulan =  date('m', strtotime(date('Y-m-d')));
-						$sql = mysqli_query($koneksi,"select * from trx inner join users on users.id_user=trx.id_user inner join 
+						// $sql = mysqli_query($koneksi,"select * from trx inner join users on users.id_user=trx.id_user inner join 
+                              // acara on acara.id_trx=trx.id_trx and month(tgl)='$bulan' where trx.id_trx NOT IN (
+                              //      SELECT id_trx from trx where keterangan = 'saldo_awal' 
+                              //     ) and trx.id_trx NOT IN (
+                              //      SELECT id_trx from trx where keterangan = 'saldo_keluar'
+                              //     ) order by tgl DESC");
+						// while ($data = mysqli_fetch_array($sql)) {
+                                   // kode kedua
+                                   $sql = mysqli_query($koneksi,"select * from trx inner join users on users.id_user=trx.id_user inner join 
                               acara on acara.id_trx=trx.id_trx and month(tgl)='$bulan' where trx.id_trx NOT IN (
-                                   SELECT id_trx from trx where keterangan = 'saldo_awal' 
-                                  ) and trx.id_trx NOT IN (
                                    SELECT id_trx from trx where keterangan = 'saldo_keluar'
                                   ) order by tgl DESC");
 						while ($data = mysqli_fetch_array($sql)) {

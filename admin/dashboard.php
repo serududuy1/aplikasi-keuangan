@@ -228,62 +228,62 @@
                                                             <?php
              require '../config/config.php';
              $sql = mysqli_query($koneksi,"select count(tgl) 
-              from keuangan where tgl like '%01-2023' ");
+              from trx where month(tgl) like '1' ");
              while ($data = mysqli_fetch_array($sql)) {echo $data['count(tgl)'];}?>,
                                                             <?php
              require '../config/config.php';
              $sql = mysqli_query($koneksi,"select count(tgl) 
-              from keuangan where tgl like '%02-2023' ");
+              from trx where month(tgl) like '2' ");
              while ($data = mysqli_fetch_array($sql)) {echo $data['count(tgl)'];} ?>,
                                                             <?php
              require '../config/config.php';
              $sql = mysqli_query($koneksi,"select count(tgl) 
-              from keuangan where tgl like '%03-2023' ");
+              from trx where month(tgl) like '3' ");
              while ($data = mysqli_fetch_array($sql)) {echo $data['count(tgl)'];} ?>,
                                                             <?php
              require '../config/config.php';
              $sql = mysqli_query($koneksi,"select count(tgl) 
-              from keuangan where tgl like '%04-2023' ");
+              from trx where month(tgl) like '4' ");
              while ($data = mysqli_fetch_array($sql)) {echo $data['count(tgl)'];} ?>,
                                                             <?php
              require '../config/config.php';
              $sql = mysqli_query($koneksi,"select count(tgl) 
-              from keuangan where tgl like '%05-2023' ");
+              from trx where month(tgl) like '5' ");
              while ($data = mysqli_fetch_array($sql)) {echo $data['count(tgl)'];} ?>,
                                                             <?php
              require '../config/config.php';
              $sql = mysqli_query($koneksi,"select count(tgl) 
-              from keuangan where tgl like '%06-2023' ");
+              from trx where month(tgl) like '6' ");
              while ($data = mysqli_fetch_array($sql)) {echo $data['count(tgl)'];} ?>,
                                                             <?php
              require '../config/config.php';
              $sql = mysqli_query($koneksi,"select count(tgl) 
-              from keuangan where tgl like '%07-2023' ");
+              from trx where month(tgl) like '7' ");
              while ($data = mysqli_fetch_array($sql)) {echo $data['count(tgl)'];} ?>,
                                                             <?php
              require '../config/config.php';
              $sql = mysqli_query($koneksi,"select count(tgl) 
-              from keuangan where tgl like '%08-2023' ");
+              from trx where month(tgl) like '8' ");
              while ($data = mysqli_fetch_array($sql)) {echo $data['count(tgl)'];} ?>,
                                                             <?php
              require '../config/config.php';
              $sql = mysqli_query($koneksi,"select count(tgl) 
-              from keuangan where tgl like '%09-2023' ");
+              from trx where month(tgl) like '9' ");
              while ($data = mysqli_fetch_array($sql)) {echo $data['count(tgl)'];} ?>,
                                                             <?php
              require '../config/config.php';
              $sql = mysqli_query($koneksi,"select count(tgl) 
-              from keuangan where tgl like '%10-2023' ");
+              from trx where month(tgl) like '10' ");
              while ($data = mysqli_fetch_array($sql)) {echo $data['count(tgl)'];} ?>,
                                                             <?php
              require '../config/config.php';
              $sql = mysqli_query($koneksi,"select count(tgl) 
-              from keuangan where tgl like '%11-2023' ");
+              from trx where month(tgl) like '11' ");
              while ($data = mysqli_fetch_array($sql)) {echo $data['count(tgl)'];} ?>,
                                                             <?php
              require '../config/config.php';
              $sql = mysqli_query($koneksi,"select count(tgl) 
-              from keuangan where tgl like '%12-2023' ");
+              from trx where month(tgl) like '12' ");
              while ($data = mysqli_fetch_array($sql)) {echo $data['count(tgl)'];} ?>
                                                        ]
                                                   }],
