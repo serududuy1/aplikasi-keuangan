@@ -82,14 +82,14 @@
 							<td>Rp.<?= number_format($data['jml_trx']); ?></td>
 							<td style="width : 100px;">
 
-								<a href="lap_acara_pdf.php?id=<?php echo $data['id']; ?>&&nm=<?php echo $data['nm_acara'];?>"
+								<a href="lap_acara_pdf.php?id=<?php echo $data['id_acara']; ?>&&nm=<?php echo $data['nm_acara'];?>"
 										class="btn btn-info btn-icon-split" target="_blank">
 										<span class="icon text-white">
 											<i class="ri-printer-fill"></i>
 										</span>
 									</a>
 
-								<a href="del_acara.php?id=<?php echo $data['id']; ?>" class="btn btn-danger btn-icon-split" onclick="return confirm('Yakin Hapus Data Acara ?')">
+								<a href="del_acara.php?id=<?php echo $data['id_acara']; ?>" class="btn btn-danger btn-icon-split" onclick="return confirm('Yakin Hapus Data Acara ?')">
 									<span class="icon text-white">
 										<i class="bi bi-trash-fill"></i>
 									</span>

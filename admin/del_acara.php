@@ -3,13 +3,13 @@ require '../config/config.php';
 
 $id=$_GET['id'];
 
-$sql = mysqli_query($koneksi,"select * from acara where id='$id'");
+$sql = mysqli_query($koneksi,"select * from acara where id_acara='$id'");
 while ($data = mysqli_fetch_array($sql)) {
 	$id_acara = $data['id'];
 	$keluar_acara = $data['saldo_keluar'];
 }
 
-$sql = mysqli_query($koneksi,"select * from data_keuangan where id='1'");
+$sql = mysqli_query($koneksi,"select * from data_keuangan where id_acara='1'");
 while ($data = mysqli_fetch_array($sql)) {
 	$id_keuangan = '1';
 	$saldo_akhir = $data['saldo_akhir'];
@@ -22,9 +22,9 @@ $saldo_keluar -= $keluar_acara;
 
 $sql=mysqli_query($koneksi,"update data_keuangan 
 	set  saldo_akhir='$saldo_akhir', saldo_keluar='$saldo_keluar',
-	 saldo_awal='$saldo_akhir', saldo_masuk='0' where id='$id_keuangan' ");
+	 saldo_awal='$saldo_akhir', saldo_masuk='0' where id_acara='$id_keuangan' ");
 
-$sql=mysqli_query($koneksi,"delete from acara where id='$id' ");
+$sql=mysqli_query($koneksi,"delete from acara where id_acara='$id' ");
 
 if ($sql) 
 {
