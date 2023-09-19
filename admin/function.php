@@ -10,11 +10,17 @@ if(isset($_POST['profile_admin'])) {
 
     if ($sql) {
         ?>
-        <script type="text/javascript">
-            alert('Data Berhasil Di Update');
-            window.location = "?url=profile";
-        </script>
-    <?php }
+<script type="text/javascript">
+alert('Data Berhasil Di Update');
+window.location = "?url=profile";
+</script>
+<?php }else{?>
+<script type="text/javascript">
+alert('Data GAGAL Di Update');
+//  window.location = "?url=profile";
+</script>
+<?php
+}
 };
 
 
@@ -39,13 +45,17 @@ if(isset($_POST['add'])) {
 
     if ($sql) {
         ?>
-        <script type="text/javascript">
-            alert('Data Berhasil Di Simpan');
-            window.location = "?url=data_anggota";
-        </script>
+<script type="text/javascript">
+alert('Data Berhasil Di Simpan');
+window.location = "?url=data_anggota";
+</script>
+<?php }else{?>
+<script type="text/javascript">
+alert('Data GAGAL Di Update');
+//  window.location = "?url=profile";
+</script>
 
-
-    <?php }
+<?php }
 };
 
 //edit semuanya
@@ -66,17 +76,21 @@ if(isset($_POST['edit'])) {
     $password = md5($_POST['password']);
     $level = $_POST['level'];
 
-    $sql = mysqli_query($koneksi," update users set recid='$recid', nama='$nama', rt='$rt', rw='$rw', alamat='$alamat', tgl_lahir='$tgl_lahir', pekerjaan='$pekerjaan', no_telp='$no_telp', status='$status', usertype='$usertype', username='$username', password='$password', level='$level' where id='$id' ");
+    $sql = mysqli_query($koneksi," update users set recid='$recid', nama='$nama', rt='$rt', rw='$rw', alamat='$alamat', tgl_lahir='$tgl_lahir', pekerjaan='$pekerjaan', no_telp='$no_telp', status='$status', usertype='$usertype', username='$username', password='$password', level='$level' where id_user='$id' ");
 
     if ($sql) {
         ?>
-        <script type="text/javascript">
-            alert('Data Berhasil Di Simpan');
-            window.location = "?url=data_anggota";
-        </script>
+<script type="text/javascript">
+alert('Data Berhasil Di Simpan');
+// window.location = "?url=data_anggota";
+</script>
 
-
-    <?php }
+<?php }else{?>
+<script type="text/javascript">
+alert('Data GAGAL Di Update');
+//  window.location = "?url=profile";
+</script>
+<?php }
 };
 
 
@@ -93,17 +107,21 @@ if(isset($_POST['edit_biodata'])) {
     $level = $_POST['level'];
     $status = 'aktif';
 
-    $sql = mysqli_query($koneksi," update users set recid='$recid', nama='$nama', tgl_lahir='$tgl_lahir', pekerjaan='$pekerjaan', no_telp='$no_telp', usertype='$usertype', level='$level', status='$status'  where id='$id' ");
+    $sql = mysqli_query($koneksi," update users set recid='$recid', nama='$nama', tgl_lahir='$tgl_lahir', pekerjaan='$pekerjaan', no_telp='$no_telp', usertype='$usertype', level='$level', status='$status'  where id_user='$id' ");
 
     if ($sql) {
         ?>
-        <script type="text/javascript">
-            alert('Data Berhasil Di Simpan');
-            window.location = "?url=data_anggota";
-        </script>
+<script type="text/javascript">
+alert('Data Berhasil Di Simpan');
+window.location = "?url=data_anggota";
+</script>
 
-
-    <?php }
+<?php }else{?>
+<script type="text/javascript">
+alert('Data GAGAL Di Update');
+//  window.location = "?url=profile";
+</script>
+<?php }
 };
 
 //edit alamat
@@ -116,17 +134,21 @@ if(isset($_POST['edit_alamat'])) {
     $alamat = $_POST['alamat'];
     $status = 'aktif';
 
-    $sql = mysqli_query($koneksi," update users set recid='$recid', rt='$rt', rw='$rw', alamat='$alamat', status='$status' where id='$id' ");
+    $sql = mysqli_query($koneksi," update users set recid='$recid', rt='$rt', rw='$rw', alamat='$alamat', status='$status' where id_user='$id' ");
 
     if ($sql) {
         ?>
-        <script type="text/javascript">
-            alert('Data Berhasil Di Simpan');
-            window.location = "?url=data_anggota";
-        </script>
+<script type="text/javascript">
+alert('Data Berhasil Di Simpan');
+window.location = "?url=data_anggota";
+</script>
 
-
-    <?php }
+<?php }else{?>
+<script type="text/javascript">
+alert('Data GAGAL Di Update');
+//  window.location = "?url=profile";
+</script>
+<?php }
 };
 
 //edit password
@@ -138,17 +160,17 @@ if(isset($_POST['edit_password'])) {
     $password = md5($_POST['password']);
     $status = 'aktif';
 
-    $sql = mysqli_query($koneksi," update users set recid='$recid', username='$username', password='$password', status='$status' where id='$id' ");
+    $sql = mysqli_query($koneksi," update users set recid='$recid', username='$username', password='$password', status='$status' where id_user='$id' ");
 
     if ($sql) {
         ?>
-        <script type="text/javascript">
-            alert('Data Berhasil Di Simpan');
-            window.location = "?url=data_anggota";
-        </script>
+<script type="text/javascript">
+alert('Data Berhasil Di Simpan');
+window.location = "?url=data_anggota";
+</script>
 
 
-    <?php }
+<?php }
 };
 
 if(isset($_POST['validasi_anggota'])) {
@@ -161,11 +183,11 @@ if(isset($_POST['validasi_anggota'])) {
 
     if ($sql) {
         ?>
-        <script type="text/javascript">
-            alert('Data Berhasil Di Validasi');
-            window.location = "?url=data_anggota";
-        </script>
-    <?php }
+<script type="text/javascript">
+alert('Data Berhasil Di Validasi');
+window.location = "?url=data_anggota";
+</script>
+<?php }
 };
 
 
@@ -181,11 +203,11 @@ if(isset($_POST['validasi_keuangan'])) {
         
     if ($sql3) {
         ?>
-        <script type="text/javascript">
-            alert('Data Berhasil Di Validasi');
-            // window.location = "?url=index_keuangan";
-        </script>
-    <?php 
+<script type="text/javascript">
+alert('Data Berhasil Di Validasi');
+// window.location = "?url=index_keuangan";
+</script>
+<?php 
     }
 };
 
@@ -209,13 +231,13 @@ if(isset($_POST['add_acara'])) {
 
     if ($sql3) {
         ?>
-        <script type="text/javascript">
-            alert('Data Berhasil Di Simpan<?=$last_id;?>');
-            window.location = "index.php?url=list_acara";
-        </script>
+<script type="text/javascript">
+alert('Data Berhasil Di Simpan<?=$last_id;?>');
+window.location = "index.php?url=list_acara";
+</script>
 
 
-    <?php 
+<?php 
     }
 };
 
@@ -239,11 +261,11 @@ if(isset($_POST['adduang'])) {
         
         if ($sql2) {
             ?>
-        <script type="text/javascript">
-            alert('Data Berhasil Di Kirim');
-            window.location = "index.php?url=index_keuangan";
-            </script>
-    <?php }
+<script type="text/javascript">
+alert('Data Berhasil Di Kirim');
+window.location = "index.php?url=index_keuangan";
+</script>
+<?php }
 };
 
 
@@ -261,17 +283,17 @@ if(isset($_POST['edit_profile_bio'])) {
     $usertype = $_POST['usertype'];
     $level = $_POST['level'];
 
-    $sql = mysqli_query($koneksi," update users set recid='$recid', nama='$nama',tgl_lahir='$tgl_lahir', pekerjaan='$pekerjaan', no_telp='$no_telp', status='$status', usertype='$usertype', level='$level' where id='$id' ");
+    $sql = mysqli_query($koneksi," update users set recid='$recid', nama='$nama',tgl_lahir='$tgl_lahir', pekerjaan='$pekerjaan', no_telp='$no_telp', status='$status', usertype='$usertype', level='$level' where id_user='$id' ");
 
     if ($sql) {
         ?>
-        <script type="text/javascript">
-            alert('Data Berhasil Di Simpan');
-            window.location = "index.php?url=profile";
-        </script>
+<script type="text/javascript">
+alert('Data Berhasil Di Simpan');
+window.location = "index.php?url=profile";
+</script>
 
 
-    <?php }
+<?php }
 };
 
 
@@ -285,17 +307,17 @@ if(isset($_POST['edit_profile_alamat'])) {
     $alamat = $_POST['alamat'];
     $status = 'aktif';
 
-    $sql = mysqli_query($koneksi," update users set recid='$recid', rt='$rt', rw='$rw', alamat='$alamat', status='$status' where id='$id' ");
+    $sql = mysqli_query($koneksi," update users set recid='$recid', rt='$rt', rw='$rw', alamat='$alamat', status='$status' where id_user='$id' ");
 
     if ($sql) {
         ?>
-        <script type="text/javascript">
-            alert('Data Berhasil Di Simpan');
-            window.location = "index.php?url=profile";
-        </script>
+<script type="text/javascript">
+alert('Data Berhasil Di Simpan');
+window.location = "index.php?url=profile";
+</script>
 
 
-    <?php }
+<?php }
 };
 
 //edit password
@@ -307,17 +329,17 @@ if(isset($_POST['edit_profile_pass'])) {
     $password = md5($_POST['password']);
     $status = 'aktif';
 
-    $sql = mysqli_query($koneksi," update users set recid='$recid', username='$username', password='$password', status='$status' where id='$id' ");
+    $sql = mysqli_query($koneksi," update users set recid='$recid', username='$username', password='$password', status='$status' where id_user='$id' ");
 
     if ($sql) {
         ?>
-        <script type="text/javascript">
-            alert('Data Berhasil Di Simpan');
-            window.location = "index.php?url=profile";
-        </script>
+<script type="text/javascript">
+alert('Data Berhasil Di Simpan');
+window.location = "index.php?url=profile";
+</script>
 
 
-    <?php }
+<?php }
 };
 
 
