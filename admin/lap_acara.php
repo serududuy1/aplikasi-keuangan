@@ -1,3 +1,30 @@
+<?php
+function tgl_indos($mulai){
+    $bulan = array (
+        1 =>   'Januari',
+        'Februari',
+        'Maret',
+        'April',
+        'Mei',
+        'Juni',
+        'Juli',
+        'Agustus',
+        'September',
+        'Oktober',
+        'November',
+        'Desember'
+    );
+    $pecahkan = explode('-', $mulai);
+    
+    // variabel pecahkan 0 = mulai
+    // variabel pecahkan 1 = bulan
+    // variabel pecahkan 2 = tahun
+ 
+    return $pecahkan[0] . ' ' . $bulan[ (int)$pecahkan[1] ] . ' ' . $pecahkan[2];
+    
+}
+
+?>
 <!DOCTYPE html>
 <html>
 
@@ -27,16 +54,17 @@
                 </div>
                 <br>
 
+
                 <div class="col-md-12 mt-3">
                     <form method="POST" class="form-inline">
                         <div class="row">
                             <div class="col-md-2">
-                                <input id="dateacara1" type="text" name="tgl_mulai" class="form-control mb-2"
-                                    placeholder="DD/MM/YYYY">
+                                <input id="dateacara1" type="date" name="tgl_mulai" class="form-control mb-2"
+                                    placeholder="dd-mm-yyyy">
                             </div>
                             <div class="col-md-2">
-                                <input id="dateacara2" type="text" name="tgl_selesai" class="form-control ml-3 mb-2"
-                                    placeholder="DD/MM/YYYY">
+                                <input id="dateacara2" type="date" name="tgl_selesai" class="form-control ml-3 mb-2"
+                                    placeholder="dd-mm-yyyy">
                             </div>
                             <div class="col-md-4">
                                 <button type="submit" name="filter" class="btn btn-primary ml-3">View</button>
@@ -66,8 +94,9 @@
 
 						$bulan =  date('m', strtotime(date('Y-m-d')));
 						if(isset($_POST['filter'])){
-							$mulai = $_POST['tgl_mulai'];
-							$selesai = $_POST['tgl_selesai'];
+                            // echo "<script>alert('saldo awal bulan ini sudah ada')</script>";
+$mulai = $_POST['tgl_mulai'];
+$selesai = $_POST['tgl_selesai'];
 							
 							$newMulai  =  date( "Ymd" ,  strtotime ( $mulai ));  
 							$newSelesai  =  date( "Ymd" ,  strtotime ( $selesai ));  
@@ -82,8 +111,8 @@
 								// $sql2 = mysqli_query($koneksi, "select sum(jml_trx) as total from trx inner join acara on acara.id_trx = trx.id_trx and keterangan='saldo_masuk' and  tgl between '$newMulai' and '$newSelesai' ");
                                    $sql3 = mysqli_query($koneksi, "select sum(jml_trx) as total from trx inner join acara on acara.id_trx = trx.id_trx and keterangan='saldo_keluar' and  tgl between '$newMulai' and '$newSelesai' ");
 							} else {
-								$sql=mysqli_query($koneksi,"select * from trx inner join users on users.id_user = trx.id_user 
-								inner join acara on acara.id_trx = trx.id_trx and month(trx.tgl)='$bulan' order by tgl desc");
+								// $sql=mysqli_query($koneksi,"select * from trx inner join users on users.id_user = trx.id_user 
+								// inner join acara on acara.id_trx = trx.id_trx and month(trx.tgl)='$bulan' order by tgl desc");
 							}
 						} else {
 							// $sql=mysqli_query($koneksi,"select * from trx inner join users on users.id_user = trx.id_user 
@@ -97,17 +126,36 @@
 						} 
 						$no=1;
 						$total = 0;
-						while ($data=mysqli_fetch_array($sql)) { 
-							// while ($datas=mysqli_fetch_array($sql2)) { 
-								 while ($data2=mysqli_fetch_array($sql3)) { 
-								 
-									  $total = $data2['total'];              
-								 }          
-							// }
-					 ?>
+                        
+                    while ($data=mysqli_fetch_array($sql)) {
+                    // while ($datas=mysqli_fetch_array($sql2)) {
+                    while ($data2=mysqli_fetch_array($sql3)) {
 
+                    $total = $data2['total'];
+                    }
+                    // }
+                    if($mulai==null){
+                        
+                    }else{
+                        
+                        ?>
+
+                    <div class="ket-periode">
+                        <div class="header-ket-periode row">
+                            <h5> Periode :
+                                <?=tgl_indos(date('d-m-y',strtotime($mulai)));?>
+                                -
+                                <?=tgl_indos(date('d-m-y',strtotime($selesai)))?>
+                            </h5>
+                        </div>
+                    </div>
+                    <?php
+}
+
+?>
 
                     <tr>
+
                         <td><?= $no++; ?></td>
                         <td><?= $data['tgl']; ?></td>
                         <td><?= $data['nama_acara']; ?></td>
