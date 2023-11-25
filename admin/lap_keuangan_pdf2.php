@@ -49,13 +49,6 @@ $pdf->Cell(73,7,''.$_GET['tgl_mulai'].'  s/d  '.$_GET['tgl_selesai'].'',0,1,'L')
 
 $pdf->Cell(10,7,'',0,1);
 $pdf->SetFont('Arial','B',11);
-$pdf->Cell(10,7,'No',1,0,'C');
-$pdf->Cell(40,7,'Nama' ,1,0,'C');
-$pdf->Cell(40,7,'Tanggal',1,0,'C');
-$pdf->Cell(40,7,'Kategori',1,0,'C');
-$pdf->Cell(20,7,'Status',1,0,'C');
-$pdf->Cell(35,7,'Uang',1,0,'C');
-
 
 $pdf->Cell(10,7,'',0,1);
 $pdf->SetFont('Arial','',10);
@@ -68,16 +61,7 @@ $sql2 = mysqli_query($koneksi, "select sum(jml_trx) as total from trx where kete
 $sql3 = mysqli_query($koneksi, "select sum(jml_trx) as total from trx where keterangan='saldo_keluar' and status_trx='terima' and  tgl between '$tgl_mulai' and '$tgl_selesai' ");
 $sql4 = mysqli_query($koneksi, "select sum(jml_saldo_awal) as saldo_awal from saldo_awal where tgl between '$tgl_mulai' and '$tgl_selesai' ");
 	        
-while ($data=mysqli_fetch_array($sql)) 
-{
-	$pdf->Cell(10,7, $no++,1,0,'C');
-	$pdf->Cell(40,7, $data['nama'],1,0,'C');  
-	$pdf->Cell(40,7, $data['tgl'],1,0,'C');
-	$pdf->Cell(40,7, $data['keterangan'],1,0,'C');
-	$pdf->Cell(20,7, $data['status_trx'],1,0,'C');
-	$pdf->Cell(35,7, 'Rp.'.number_format($data['jml_trx']).'',1,1,'C');
 
-}
 
 $pdf->Cell(10,10,'',0,1);
 while ($datas=mysqli_fetch_array($sql2)) { 

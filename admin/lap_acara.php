@@ -24,6 +24,10 @@ function tgl_indos($mulai){
     
 }
 
+$total = 0;
+$sawal = 0;
+$sakhir = 0;
+$total2 = 0;
 ?>
 <!DOCTYPE html>
 <html>
@@ -78,13 +82,8 @@ function tgl_indos($mulai){
             <table id="example" class="table table-hover">
                 <thead>
                     <tr>
-                        <th>No</th>
-                        <th>Tanggal</th>
-                        <th>Nama Acara</th>
-                        <th style="width:380px">Alamat</th>
-                        <th>Total Anggaran</th>
-                        <th></th>
-                    </tr>
+                        <th>Keterangan</th>
+                        <th>Jumlah</th>
                 </thead>
                 <tbody>
 
@@ -100,6 +99,9 @@ $selesai = $_POST['tgl_selesai'];
 							
 							$newMulai  =  date( "Ymd" ,  strtotime ( $mulai ));  
 							$newSelesai  =  date( "Ymd" ,  strtotime ( $selesai ));  
+                            $getBulan = date('m', strtotime(date($mulai)));
+
+                            
 
 							if ($mulai!=null || $selesai!=null ) {
 								$sql=mysqli_query($koneksi,"select * from trx inner join users on users.id_user = trx.id_user 
@@ -108,8 +110,10 @@ $selesai = $_POST['tgl_selesai'];
 								   ) and trx.id_trx NOT IN (
 									SELECT id_trx from trx where keterangan = 'saldo_masuk'
 								   )   order by tgl desc"); 
-								// $sql2 = mysqli_query($koneksi, "select sum(jml_trx) as total from trx inner join acara on acara.id_trx = trx.id_trx and keterangan='saldo_masuk' and  tgl between '$newMulai' and '$newSelesai' ");
+								$sql2 = mysqli_query($koneksi, "SELECT * FROM `saldo_awal` WHERE month(tgl)='$getBulan' ");
                                    $sql3 = mysqli_query($koneksi, "select sum(jml_trx) as total from trx inner join acara on acara.id_trx = trx.id_trx and keterangan='saldo_keluar' and  tgl between '$newMulai' and '$newSelesai' ");
+                                   $sql4 = mysqli_query($koneksi, "select sum(jml_trx) as total2 from trx where keterangan='saldo_masuk' and status_trx='terima' and  tgl between '$newMulai' and '$newSelesai' ");
+
 							} else {
 								// $sql=mysqli_query($koneksi,"select * from trx inner join users on users.id_user = trx.id_user 
 								// inner join acara on acara.id_trx = trx.id_trx and month(trx.tgl)='$bulan' order by tgl desc");
@@ -127,36 +131,40 @@ $selesai = $_POST['tgl_selesai'];
 						$no=1;
 						$total = 0;
                         
-                    while ($data=mysqli_fetch_array($sql)) {
-                    // while ($datas=mysqli_fetch_array($sql2)) {
-                    while ($data2=mysqli_fetch_array($sql3)) {
+while ($data = mysqli_fetch_array($sql)) {
+    while ($datas = mysqli_fetch_array($sql2)) {
+while ($data2 = mysqli_fetch_array($sql3)) {
+    while ($data4 = mysqli_fetch_array($sql4)) {
+        // }
+        // }
+        if($mulai == null) {
+        } else {
 
-                    $total = $data2['total'];
-                    }
-                    // }
-                    if($mulai==null){
-                        
-                    }else{
-                        
-                        ?>
+            $total = $data2['total'];
+            $total2 = $data4['total2'];
+            $sawal = $datas['jml_saldo_awal'];
+            $sakhir = $sawal + $total2 - $total;
+
+            ?>
 
                     <div class="ket-periode">
                         <div class="header-ket-periode row">
                             <h5> Periode :
-                                <?=tgl_indos(date('d-m-y',strtotime($mulai)));?>
+                                <?=tgl_indos(date('d-m-y', strtotime($mulai)));?>
                                 -
-                                <?=tgl_indos(date('d-m-y',strtotime($selesai)))?>
+                                <?=tgl_indos(date('d-m-y', strtotime($selesai)))?>
                             </h5>
                         </div>
                     </div>
                     <?php
+        }
+    }
 }
-
-?>
+        ?>
 
                     <tr>
 
-                        <td><?= $no++; ?></td>
+                        <!-- <td><?= $no++; ?></td>
                         <td><?= $data['tgl']; ?></td>
                         <td><?= $data['nama_acara']; ?></td>
                         <td><?= $data['tempat_acara']; ?></td>
@@ -170,26 +178,47 @@ $selesai = $_POST['tgl_selesai'];
                                 </span>
                             </a>
 
-                        </td>
+                        </td> -->
                     </tr>
-                    <?php 
-					}
+                    <?php
+    }
+}
 					 ?>
 
-                </tbody>
 
-                <tfoot>
+
+
                     <tr>
 
-                        <th colspan="3">Total Anggaran Yang di Gunakan</th>
+                        <th>Saldo Awal</th>
 
-                        <th></th>
-                        <th>Rp.<?= number_format($total); ?></th>
-                        <th></th>
+                        <th>Rp.<?= number_format($sawal); ?></th>
 
                     </tr>
-                </tfoot>
+                    <tr>
 
+                        <th>Total Saldo Masuk</th>
+
+                        <th>Rp.<?= number_format($total2); ?></th>
+
+                    </tr>
+                    <tr>
+
+                        <th>Total Anggaran Yang di Gunakan</th>
+
+                        <th>Rp.<?= number_format($total); ?></th>
+
+                    </tr>
+                    <tr>
+
+                        <th>Saldo Akhir</th>
+
+                        <th>Rp.<?= number_format($sakhir); ?></th>
+
+                    </tr>
+                </tbody>
+                <tfoot>
+                </tfoot>
             </table>
             <br>
 
